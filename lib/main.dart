@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/views/pages/login.dart';
+import 'package:myapp/views/login.dart';
+import 'package:myapp/views/register.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,8 +35,10 @@ class MyApp extends StatelessWidget {
           case "/login":
             return settings.arguments == null
                 ? fadePageRoute(const Login())
-                : fadePageRoute(Login(
-                    username: settings.arguments as TextEditingController));
+                : fadePageRoute(
+                    Login(usernameText: settings.arguments.toString()));
+          case "/register":
+            return fadePageRoute(const Register());
           default:
             return null;
         }

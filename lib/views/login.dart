@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/views/customs/log/custom_button.dart';
-import 'package:myapp/views/customs/log/custom_text_field.dart';
+import 'package:myapp/resources/custom_text_field.dart';
+import 'package:myapp/resources/custom_button.dart';
 
 //router name: '/login'
 class Login extends StatelessWidget {
-  final TextEditingController? username;
-  const Login({super.key, this.username});
+  final String? usernameText;
+  const Login({super.key, this.usernameText = ''});
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController username = TextEditingController();
     TextEditingController password = TextEditingController();
+    if (usernameText != null) username.text = usernameText as String;
     return Stack(
       children: [
         Container(
@@ -80,9 +82,7 @@ class Login extends StatelessWidget {
                     ),
                     CustomButton(
                       name: 'Đăng nhập',
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/login');
-                      },
+                      onPressed: () {},
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -92,7 +92,11 @@ class Login extends StatelessWidget {
                             child: const Text('Quên mật khẩu')),
                         const Text('|'),
                         TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(
+                                '/register',
+                              );
+                            },
                             child: const Text('Tạo tài khoản')),
                       ],
                     ),
