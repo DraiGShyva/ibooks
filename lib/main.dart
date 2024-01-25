@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/views/login.dart';
-import 'package:myapp/views/register.dart';
+import 'package:myapp/views/begin.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,24 +20,18 @@ class MyApp extends StatelessWidget {
               child: child,
             );
           },
-          // transitionDuration: const Duration(milliseconds: 400),
+          transitionDuration: const Duration(milliseconds: 400),
         );
     return MaterialApp(
-      title: 'My App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home: const Login(),
+      home: const Begin(),
       onGenerateRoute: (settings) {
         switch (settings.name) {
-          case "/login":
-            return settings.arguments == null
-                ? fadePageRoute(const Login())
-                : fadePageRoute(
-                    Login(usernameText: settings.arguments.toString()));
-          case "/register":
-            return fadePageRoute(const Register());
+          case "/begin":
+            return fadePageRoute(const Begin());
           default:
             return null;
         }

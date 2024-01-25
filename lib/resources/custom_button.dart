@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomButton extends StatefulWidget {
+class CustomButton extends StatelessWidget {
   final String name;
   final Function()? onPressed;
   const CustomButton({
@@ -9,11 +9,6 @@ class CustomButton extends StatefulWidget {
     required this.onPressed,
   });
 
-  @override
-  State<CustomButton> createState() => _CustomButtonState();
-}
-
-class _CustomButtonState extends State<CustomButton> {
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -36,13 +31,13 @@ class _CustomButtonState extends State<CustomButton> {
             ],
           ),
           child: InkWell(
-            onTap: widget.onPressed,
+            onTap: onPressed,
             borderRadius: BorderRadius.circular(100),
             child: Padding(
               padding:
                   const EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
               child: Text(
-                widget.name,
+                name,
                 style: const TextStyle(
                   fontSize: 15,
                   color: Color.fromARGB(255, 0, 152, 198),
