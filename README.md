@@ -1,16 +1,44 @@
-# myapp
+# Your App Name
 
-A new Flutter project.
+Your App Name is a brief description of what your app does.
+
+## Features
+
+- Feature 1
+- Feature 2
+- Feature 3
+- ...
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-A few resources to get you started if this is your first Flutter project:
+### Prerequisites
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+What things you need to install the software and how to install them.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Installation
+
+A step by step series of examples that tell you how to get a development environment running.
+
+## Usage
+
+A few examples of useful commands or tasks.
+
+## Running the tests
+
+Explain how to run the automated tests for this system.
+
+## Contributing
+
+Details about how to contribute to this project.
+
+## License
+
+This project is licensed under the [Your License] - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+- Hat tip to anyone whose code was used
+- Inspiration
+- etc.
