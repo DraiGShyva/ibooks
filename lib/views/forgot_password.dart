@@ -4,17 +4,13 @@ import 'package:myapp/resources/custom_button.dart';
 import 'package:myapp/views/begin.dart';
 
 // This page is used inside the Begin page
-class Register extends StatelessWidget {
-  const Register({
+class ForgotPassword extends StatelessWidget {
+  const ForgotPassword({
     super.key,
     required this.email,
-    required this.password,
-    required this.rePassword,
   });
 
   final TextEditingController email;
-  final TextEditingController password;
-  final TextEditingController rePassword;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +18,7 @@ class Register extends StatelessWidget {
       color: Colors.transparent,
       child: Center(
         child: Ink(
-          height: 460,
+          height: 340,
           width: 300,
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -52,46 +48,35 @@ class Register extends StatelessWidget {
                     width: 150,
                   ),
                 ),
-                const SizedBox(height: 10),
-                const Text('Đăng ký tài khoản'),
-                const SizedBox(height: 10),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Text(
+                  'Lấy lại mật khẩu của bạn',
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
                 CustomTextField(
                   labelText: 'Email*',
                   hintText: 'abc123@edu.com',
                   textEC: email,
                 ),
-                const SizedBox(height: 10),
-                CustomTextField(
-                  labelText: 'Mật khẩu*',
-                  hintText: '[A-Z][a-z][0-9][!@#\$%^&*]',
-                  textEC: password,
-                  isPassword: true,
-                ),
-                const SizedBox(height: 10),
-                CustomTextField(
-                  labelText: 'Nhập lại mật khẩu*',
-                  hintText: 'Xác nhận mật khẩu của bạn.',
-                  textEC: rePassword,
-                  isPassword: true,
-                ),
                 CustomButton(
-                  name: 'Đăng ký',
-                  onPressed: () {
-                    beginPage.value = '/registerToLogin';
-                    clearPass();
-                  },
+                  name: 'Gửi mã xác nhận',
+                  onPressed: () {},
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text('Bạn đã có tài khoản?'),
                     TextButton(
-                        onPressed: () {
-                          beginPage.value = '/registerToLogin';
-                          clearEmail();
-                          clearPass();
-                        },
-                        child: const Text('Đăng nhập')),
+                      onPressed: () {
+                        beginPage.value = '/forgotPasswordToLogin';
+                        clearEmail();
+                      },
+                      child: const Text('Đăng nhập'),
+                    ),
                   ],
                 ),
               ],

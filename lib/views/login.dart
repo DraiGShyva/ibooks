@@ -7,11 +7,11 @@ import 'package:myapp/views/begin.dart';
 class Login extends StatelessWidget {
   const Login({
     super.key,
-    required this.username,
+    required this.email,
     required this.password,
   });
 
-  final TextEditingController username;
+  final TextEditingController email;
   final TextEditingController password;
 
   @override
@@ -61,8 +61,8 @@ class Login extends StatelessWidget {
                 ),
                 CustomTextField(
                   labelText: 'Tài khoản*',
-                  hintText: 'Nhập tài khoản của bạn.',
-                  textEC: username,
+                  hintText: 'Nhập email của bạn.',
+                  textEC: email,
                 ),
                 const SizedBox(
                   height: 10,
@@ -81,11 +81,17 @@ class Login extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextButton(
-                        onPressed: () {}, child: const Text('Quên mật khẩu')),
+                        onPressed: () {
+                          beginPage.value = '/loginToForgotPassword';
+                          clearPass();
+                        },
+                        child: const Text('Quên mật khẩu')),
                     const Text('|'),
                     TextButton(
                         onPressed: () {
                           beginPage.value = '/loginToRegister';
+                          clearEmail();
+                          clearPass();
                         },
                         child: const Text('Tạo tài khoản')),
                   ],

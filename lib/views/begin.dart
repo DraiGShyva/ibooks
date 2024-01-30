@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/views/forgot_password.dart';
 import 'package:myapp/views/login.dart';
 import 'package:myapp/views/register.dart';
 
@@ -19,22 +20,20 @@ class Begin extends StatelessWidget {
             ),
           ),
         ),
-        const Page(),
+        const MiniPage(),
       ],
     );
   }
 }
 
-ValueNotifier<String> beginPage = ValueNotifier<String>('');
-
-class Page extends StatefulWidget {
-  const Page({super.key});
+class MiniPage extends StatefulWidget {
+  const MiniPage({super.key});
 
   @override
-  State<Page> createState() => _PageState();
+  State<MiniPage> createState() => _MiniPageState();
 }
 
-class _PageState extends State<Page> {
+class _MiniPageState extends State<MiniPage> {
   @override
   void initState() {
     super.initState();
@@ -53,62 +52,85 @@ class _PageState extends State<Page> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController username = TextEditingController();
-    TextEditingController password = TextEditingController();
-    TextEditingController email = TextEditingController();
-    TextEditingController rePassword = TextEditingController();
-
-    pushOut(child) => SlideTransition(
-          position: Tween<Offset>(
-            begin: Offset.zero,
-            end: const Offset(0.0, 1.0),
-          ).animate(
-            AnimationController(
-              vsync: Navigator.of(context),
-              duration: const Duration(milliseconds: 1000),
-            )..forward(),
-          ),
-          child: child,
-        );
-
-    pushIn(child) => SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(1.0, 0.0),
-            end: Offset.zero,
-          ).animate(
-            AnimationController(
-              vsync: Navigator.of(context),
-              duration: const Duration(milliseconds: 1000),
-            )..forward(),
-          ),
-          child: child,
-        );
-
     switch (beginPage.value) {
+      case "/loginToRegister":
+        {
+          return Stack(
+            children: [
+              _pushOut(_login, context),
+              _pushIn(_register, context),
+            ],
+          );
+        }
+      case "/loginToForgotPassword":
+        return Stack(
+          children: [
+            _pushOut(_login, context),
+            _pushIn(_forgotPassword, context),
+          ],
+        );
       case "/registerToLogin":
         return Stack(
           children: [
-            pushOut(Register(
-                email: email,
-                username: username,
-                password: password,
-                rePassword: rePassword)),
-            pushIn(Login(username: username, password: password)),
+            _pushOut(_register, context),
+            _pushIn(_login, context),
           ],
         );
-      case "/loginToRegister":
+      case "/forgotPasswordToLogin":
         return Stack(
           children: [
-            pushOut(Login(username: username, password: password)),
-            pushIn(Register(
-                email: email,
-                username: username,
-                password: password,
-                rePassword: rePassword)),
+            _pushOut(_forgotPassword, context),
+            _pushIn(_login, context),
           ],
         );
       default:
-        return Login(username: username, password: password);
+        return _login;
     }
   }
 }
+
+ValueNotifier<String> beginPage = ValueNotifier<String>('');
+
+clearEmail() {
+  _email.clear();
+}
+
+clearPass() {
+  _password.clear();
+  _rePassword.clear();
+}
+
+TextEditingController _email = TextEditingController();
+TextEditingController _password = TextEditingController();
+TextEditingController _rePassword = TextEditingController();
+
+var _login = Login(email: _email, password: _password);
+var _register =
+    Register(email: _email, password: _password, rePassword: _rePassword);
+var _forgotPassword = ForgotPassword(email: _email);
+
+_pushIn(Widget child, BuildContext context) => SlideTransition(
+      position: Tween<Offset>(
+        begin: const Offset(1.0, 0.0),
+        end: Offset.zero,
+      ).animate(
+        AnimationController(
+          vsync: Navigator.of(context),
+          duration: const Duration(milliseconds: 1000),
+        )..forward(),
+      ),
+      child: child,
+    );
+
+_pushOut(Widget child, BuildContext context) => ScaleTransition(
+      scale: Tween<double>(
+        begin: 1.0,
+        end: 0.0,
+      ).animate(
+        AnimationController(
+          vsync: Navigator.of(context),
+          duration: const Duration(milliseconds: 1000),
+        )..forward(),
+      ),
+      child: child,
+    );
