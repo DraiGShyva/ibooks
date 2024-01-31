@@ -20,7 +20,17 @@ class Begin extends StatelessWidget {
             ),
           ),
         ),
-        const MiniPage(),
+        const Material(
+          color: Colors.transparent,
+          child: Center(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                child: MiniPage(),
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
