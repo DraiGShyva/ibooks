@@ -19,7 +19,6 @@ class Register extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 460,
       width: 300,
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -38,61 +37,59 @@ class Register extends StatelessWidget {
         ],
       ),
       padding: const EdgeInsetsDirectional.all(20.0),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              alignment: Alignment.topLeft,
-              child: Image.asset(
-                'assets/images/log/hello.png',
-                width: 150,
-              ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            alignment: Alignment.topLeft,
+            child: Image.asset(
+              'assets/images/log/hello.png',
+              width: 150,
             ),
-            const SizedBox(height: 10),
-            const Text('Đăng ký tài khoản'),
-            const SizedBox(height: 10),
-            CustomTextField(
-              labelText: 'Email*',
-              hintText: 'abc123@edu.com',
-              textEC: email,
-            ),
-            const SizedBox(height: 10),
-            CustomTextField(
-              labelText: 'Mật khẩu*',
-              hintText: '[A-Z][a-z][0-9][!@#\$%^&*]',
-              textEC: password,
-              isPassword: true,
-            ),
-            const SizedBox(height: 10),
-            CustomTextField(
-              labelText: 'Nhập lại mật khẩu*',
-              hintText: 'Xác nhận mật khẩu của bạn.',
-              textEC: rePassword,
-              isPassword: true,
-            ),
-            CustomButton(
-              name: 'Đăng ký',
-              onPressed: () {
-                beginPage.value = '/registerToLogin';
-                clearPass();
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Bạn đã có tài khoản?'),
-                TextButton(
-                    onPressed: () {
-                      beginPage.value = '/registerToLogin';
-                      clearEmail();
-                      clearPass();
-                    },
-                    child: const Text('Đăng nhập')),
-              ],
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 10),
+          const Text('Đăng ký tài khoản'),
+          const SizedBox(height: 10),
+          CustomTextField(
+            labelText: 'Email*',
+            hintText: 'abc123@edu.com',
+            textEC: email,
+          ),
+          const SizedBox(height: 10),
+          CustomTextField(
+            labelText: 'Mật khẩu*',
+            hintText: '[A-Z][a-z][0-9][!@#\$%^&*]',
+            textEC: password,
+            isPassword: true,
+          ),
+          const SizedBox(height: 10),
+          CustomTextField(
+            labelText: 'Xác nhận mật khẩu*',
+            hintText: 'Nhập lại mật khẩu của bạn.',
+            textEC: rePassword,
+            isPassword: true,
+          ),
+          CustomButton(
+            name: 'Đăng ký',
+            onPressed: () {
+              beginPage.value = '/registerToLogin';
+              clearPass();
+            },
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('Bạn đã có tài khoản?'),
+              TextButton(
+                  onPressed: () {
+                    beginPage.value = '/registerToLogin';
+                    clearEmail();
+                    clearPass();
+                  },
+                  child: const Text('Đăng nhập')),
+            ],
+          ),
+        ],
       ),
     );
   }
