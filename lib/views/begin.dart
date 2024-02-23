@@ -103,6 +103,7 @@ ValueNotifier<String> beginPage = ValueNotifier<String>('');
 
 clearEmail() {
   _email.clear();
+  clearPass();
 }
 
 clearPass() {
@@ -114,10 +115,32 @@ TextEditingController _email = TextEditingController();
 TextEditingController _password = TextEditingController();
 TextEditingController _rePassword = TextEditingController();
 
-var _login = Login(email: _email, password: _password);
-var _register =
-    Register(email: _email, password: _password, rePassword: _rePassword);
-var _forgotPassword = ForgotPassword(email: _email);
+var _login = container(Login(email: _email, password: _password));
+var _register = container(
+    Register(email: _email, password: _password, rePassword: _rePassword));
+var _forgotPassword = container(ForgotPassword(email: _email));
+
+Widget container(Widget child) => Container(
+      width: 300,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+        border: Border.fromBorderSide(
+          BorderSide(
+            color: Color.fromARGB(64, 0, 0, 0),
+            width: 1.0,
+          ),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black,
+            blurRadius: 10,
+          ),
+        ],
+      ),
+      padding: const EdgeInsetsDirectional.all(20.0),
+      child: child,
+    );
 
 _pushIn(Widget child, BuildContext context) => SlideTransition(
       position: Tween<Offset>(
