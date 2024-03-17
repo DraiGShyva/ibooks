@@ -2,24 +2,27 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatefulWidget {
   final String labelText;
-  final String? hintText;
+  final String hintText;
   final TextEditingController textEC;
   final bool isPassword;
+  final FormFieldValidator<String>? validator;
 
   const CustomTextField({
     super.key,
-    required this.labelText,
-    this.hintText,
+    this.labelText = '',
+    this.hintText = '',
     required this.textEC,
     this.isPassword = false,
+    this.validator,
   });
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
 }
 
+ChangeNotifier customTextFieldListener = ChangeNotifier();
+
 class _CustomTextFieldState extends State<CustomTextField> {
-  bool nullText = false;
   bool hiddenButton = true;
 
   @override
@@ -52,17 +55,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ),
           controller: widget.textEC,
           obscureText: widget.isPassword ? hiddenButton : false,
-          onChanged: (value) {
-            bool old = nullText;
-            nullText = value.isEmpty ? true : false;
-            if (old != nullText) setState(() {});
-          },
+          validator: widget.validator,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
         ),
-        if (nullText)
-          Text(
-            "${widget.labelText} không thể để trống.",
-            style: const TextStyle(color: Colors.red),
-          ),
       ],
     );
   }

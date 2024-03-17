@@ -1,12 +1,11 @@
 class Account {
-  String? username;
-  String? password;
   String? email;
+  String? password;
 
-  Account({this.username, this.email, this.password});
+  Account({this.email, this.password});
 
   @override
   String toString() {
-    return "${username!} ${email!} ${password!}";
+    return "${email!} ${password!}";
   }
 }
