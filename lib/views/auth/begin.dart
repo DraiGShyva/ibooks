@@ -21,14 +21,11 @@ class Begin extends StatelessWidget {
               ),
             ),
           ),
-          const Material(
-            color: Colors.transparent,
-            child: Center(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                  child: MiniPage(),
-                ),
+          const Center(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                child: MiniPage(),
               ),
             ),
           ),
@@ -65,36 +62,12 @@ class _MiniPageState extends State<MiniPage> {
   @override
   Widget build(BuildContext context) {
     switch (beginPageListener.value) {
-      case "/loginToRegister":
-        {
-          return Stack(
-            children: [
-              _pushOut(Login(), context),
-              _pushIn(Register(), context),
-            ],
-          );
-        }
-      case "/loginToForgotPassword":
-        return Stack(
-          children: [
-            _pushOut(Login(), context),
-            _pushIn(ForgotPassword(), context),
-          ],
-        );
-      case "/registerToLogin":
-        return Stack(
-          children: [
-            _pushOut(Register(), context),
-            _pushIn(Login(), context),
-          ],
-        );
-      case "/forgotPasswordToLogin":
-        return Stack(
-          children: [
-            _pushOut(ForgotPassword(), context),
-            _pushIn(Login(), context),
-          ],
-        );
+      case '/login':
+        return customScaleTransition(Login(), context);
+      case '/register':
+        return customScaleTransition(Register(), context);
+      case '/forgotPassword':
+        return customScaleTransition(ForgotPassword(), context);
       default:
         return Login();
     }
@@ -103,28 +76,13 @@ class _MiniPageState extends State<MiniPage> {
 
 ValueNotifier<String> beginPageListener = ValueNotifier<String>('');
 
-_pushIn(Widget child, BuildContext context) => SlideTransition(
-      position: Tween<Offset>(
-        begin: const Offset(1.0, 0.0),
-        end: Offset.zero,
-      ).animate(
-        AnimationController(
-          vsync: Navigator.of(context),
-          duration: const Duration(milliseconds: 1000),
-        )..forward(),
-      ),
-      child: child,
-    );
-
-_pushOut(Widget child, BuildContext context) => ScaleTransition(
+customScaleTransition(Widget child, BuildContext context) => ScaleTransition(
       scale: Tween<double>(
-        begin: 1.0,
-        end: 0.0,
-      ).animate(
-        AnimationController(
-          vsync: Navigator.of(context),
-          duration: const Duration(milliseconds: 1000),
-        )..forward(),
-      ),
+        begin: 0.0,
+        end: 1.0,
+      ).animate(AnimationController(
+        vsync: Navigator.of(context),
+        duration: const Duration(milliseconds: 500),
+      )..forward()),
       child: child,
     );

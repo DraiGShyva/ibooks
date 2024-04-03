@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/components/custom_text_field.dart';
-import 'package:myapp/components/custom_button.dart';
-import 'package:myapp/components/snack_bar.dart';
-import 'package:myapp/data/user.dart';
-import 'package:myapp/utils/validator.dart';
-import 'package:myapp/views/auth/begin.dart';
+
+import '../../components/custom_button.dart';
+import '../../components/custom_text_field.dart';
+import '../../components/notification.dart';
+import '../../data/user.dart';
+import '../../utils/validator.dart';
+import 'begin.dart';
 
 // This page is used inside the Begin page
 class Login extends StatelessWidget {
@@ -16,6 +17,19 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    loginPressed() {
+      if (formKey.currentState!.validate()) {
+        if (email.text != user.email && password.text != user.password) {
+          showSnackBarMessenger(
+              content: 'Tài khoản hoặc mật khẩu không chính xác!',
+              context: context);
+        } else {
+          showSnackBarMessenger(
+              content: 'Đăng nhập thành công', context: context);
+        }
+      }
+    }
+
     return Container(
       width: 300,
       decoration: const BoxDecoration(
@@ -32,65 +46,47 @@ class Login extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              alignment: Alignment.topLeft,
-              child: Image.asset(
-                'assets/images/log/hello.png',
-                width: 150,
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            const Text(
-              'Đăng nhập vào ứng dụng',
-            ),
-            const SizedBox(
-              height: 10,
-            ),
+                alignment: Alignment.topLeft,
+                child: Image.asset('assets/images/log/hello.png', width: 150)),
+            const SizedBox(height: 10),
+            const Text('Đăng nhập vào ứng dụng'),
+            const SizedBox(height: 10),
             CustomTextField(
               labelText: 'Tài khoản*',
               hintText: 'Nhập email của bạn.',
               textEC: email,
               validator: Validator.emailValidator.call,
+              action: TextInputAction.next,
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             CustomTextField(
               labelText: 'Mật khẩu*',
               hintText: 'Nhập mật khẩu của bạn.',
               textEC: password,
               isPassword: true,
               validator: Validator.passwordValidator.call,
-            ),
-            CustomButton(
-              name: 'Đăng nhập',
-              onPressed: () {
-                if (formKey.currentState!.validate()) {
-                  if (email.text != user.email &&
-                      password.text != user.password) {
-                    showMessenger(
-                        'Tài khoản hoặc mật khẩu không chính xác!', context);
-                  } else {
-                    showMessenger('Đăng nhập thành công', context);
-                  }
-                }
+              onFieldSubmitted: (value) {
+                loginPressed();
               },
             ),
+            const SizedBox(height: 15),
+            CustomButton(name: 'Đăng nhập', onPressed: loginPressed),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
                     onPressed: () {
-                      beginPageListener.value = '/loginToForgotPassword';
+                      beginPageListener.value = '/forgotPassword';
                     },
                     child: const Text('Quên mật khẩu')),
                 const Text('|'),
                 TextButton(
-                    onPressed: () {
-                      beginPageListener.value = '/loginToRegister';
-                    },
-                    child: const Text('Tạo tài khoản')),
+                  onPressed: () {
+                    beginPageListener.value = '/register';
+                  },
+                  child: const Text('Tạo tài khoản'),
+                ),
               ],
             ),
           ],
