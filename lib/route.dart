@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 
 import 'pages/forgot_password_page.dart';
-import 'pages/home_page.dart';
 import 'pages/login_page.dart';
+import 'pages/my_bottom_navigation_bar.dart';
 import 'pages/register_page.dart';
 
 const String LOGIN = '/login';
@@ -23,9 +23,9 @@ onGenerateRoute(settings) => MaterialPageRoute(builder: (context) {
         case FORGOT:
           return ForgotPasswordPage();
         case HOME:
-          return HomePage();
+          return MyBottomNavigationBar();
         default:
-          return HomePage();
+          return MyBottomNavigationBar();
       }
     });
 
