@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../components/custom_button.dart';
-import '../../components/custom_text_field.dart';
-import '../../components/notification.dart';
-import '../../utils/validator.dart';
-import 'begin.dart';
+import '../components/custom_button.dart';
+import '../components/custom_text_field.dart';
+import '../utils/on_pressed.dart';
+import '../utils/validator.dart';
+import 'begin_page.dart';
 
 // This page is used inside the Begin page
-class Register extends StatelessWidget {
-  Register({super.key});
+class RegisterPage extends StatelessWidget {
+  RegisterPage({super.key});
 
-  final TextEditingController email = TextEditingController();
+  final TextEditingController username = TextEditingController();
   final TextEditingController password = TextEditingController();
   final TextEditingController rePassword = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey();
@@ -18,15 +18,6 @@ class Register extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FocusNode confirmPasswordFocusNode = FocusNode();
-    registerPressed() {
-      FocusScope.of(context).unfocus();
-      if (formKey.currentState!.validate()) {
-        //TODO: Gửi dữ liệu đăng ký tài khoản
-        showSnackBarMessenger(
-            content: 'Đăng ký tài khoản thành công', context: context);
-        beginPageListener.value = '/login';
-      }
-    }
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -53,10 +44,10 @@ class Register extends StatelessWidget {
               const Text('Đăng ký tài khoản'),
               const SizedBox(height: 10),
               CustomTextField(
-                labelText: 'Email*',
-                hintText: 'abc123@edu.com',
-                textEC: email,
-                validator: Validator.emailValidator.call,
+                labelText: 'Username*',
+                hintText: 'abc123',
+                textEC: username,
+                validator: Validator.requiredValidator.call,
                 action: TextInputAction.next,
               ),
               const SizedBox(height: 10),
@@ -79,14 +70,14 @@ class Register extends StatelessWidget {
                 validator:
                     Validator.confirmPasswordValidator(password.text).call,
                 focusNode: confirmPasswordFocusNode,
-                onFieldSubmitted: (value) {
-                  registerPressed();
-                },
+                onFieldSubmitted: (value) => OnPressed.registerPressed(
+                    formKey, username.text, password.text, context),
               ),
               const SizedBox(height: 15),
               CustomButton(
                 name: 'Đăng ký',
-                onPressed: registerPressed,
+                onPressed: () => OnPressed.registerPressed(
+                    formKey, username.text, password.text, context),
               ),
               const SizedBox(height: 10),
               Row(
@@ -94,9 +85,7 @@ class Register extends StatelessWidget {
                 children: [
                   const Text('Bạn đã có tài khoản?'),
                   TextButton(
-                      onPressed: () {
-                        beginPageListener.value = '/login';
-                      },
+                      onPressed: () => beginPageListener.value = '/login',
                       child: const Text('Đăng nhập')),
                 ],
               ),

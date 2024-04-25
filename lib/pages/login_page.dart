@@ -1,35 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/utils/on_pressed.dart';
 
-import '../../components/custom_button.dart';
-import '../../components/custom_text_field.dart';
-import '../../components/notification.dart';
-import '../../data/user.dart';
-import '../../utils/validator.dart';
-import 'begin.dart';
+import '../components/custom_button.dart';
+import '../components/custom_text_field.dart';
+import '../utils/validator.dart';
+import 'begin_page.dart';
 
 // This page is used inside the Begin page
-class Login extends StatelessWidget {
-  Login({super.key});
+class LoginPage extends StatelessWidget {
+  LoginPage({super.key});
 
-  final TextEditingController email = TextEditingController();
+  final TextEditingController username = TextEditingController();
   final TextEditingController password = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    loginPressed() {
-      if (formKey.currentState!.validate()) {
-        if (email.text != user.email && password.text != user.password) {
-          showSnackBarMessenger(
-              content: 'Tài khoản hoặc mật khẩu không chính xác!',
-              context: context);
-        } else {
-          showSnackBarMessenger(
-              content: 'Đăng nhập thành công', context: context);
-        }
-      }
-    }
-
     return Container(
       width: 300,
       decoration: const BoxDecoration(
@@ -53,9 +39,9 @@ class Login extends StatelessWidget {
             const SizedBox(height: 10),
             CustomTextField(
               labelText: 'Tài khoản*',
-              hintText: 'Nhập email của bạn.',
-              textEC: email,
-              validator: Validator.emailValidator.call,
+              hintText: 'Nhập tên người dùng của bạn.',
+              textEC: username,
+              validator: Validator.requiredValidator.call,
               action: TextInputAction.next,
             ),
             const SizedBox(height: 10),
@@ -65,26 +51,25 @@ class Login extends StatelessWidget {
               textEC: password,
               isPassword: true,
               validator: Validator.passwordValidator.call,
-              onFieldSubmitted: (value) {
-                loginPressed();
-              },
+              onFieldSubmitted: (value) => OnPressed.loginPressed(
+                  formKey, username.text, password.text, context),
             ),
             const SizedBox(height: 15),
-            CustomButton(name: 'Đăng nhập', onPressed: loginPressed),
+            CustomButton(
+                name: 'Đăng nhập',
+                onPressed: () => OnPressed.loginPressed(
+                    formKey, username.text, password.text, context)),
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                    onPressed: () {
-                      beginPageListener.value = '/forgotPassword';
-                    },
+                    onPressed: () =>
+                        beginPageListener.value = '/forgot-password',
                     child: const Text('Quên mật khẩu')),
                 const Text('|'),
                 TextButton(
-                  onPressed: () {
-                    beginPageListener.value = '/register';
-                  },
+                  onPressed: () => beginPageListener.value = '/register',
                   child: const Text('Tạo tài khoản'),
                 ),
               ],

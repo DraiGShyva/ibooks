@@ -1,30 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/utils/on_pressed.dart';
 
-import '../../components/custom_button.dart';
-import '../../components/custom_text_field.dart';
-import '../../components/notification.dart';
-import '../../utils/validator.dart';
-import 'begin.dart';
+import '../components/custom_button.dart';
+import '../components/custom_text_field.dart';
+import '../utils/validator.dart';
+import 'begin_page.dart';
 
 // This page is used inside the Begin page
-class ForgotPassword extends StatelessWidget {
-  ForgotPassword({super.key});
+class ForgotPasswordPage extends StatelessWidget {
+  ForgotPasswordPage({super.key});
 
   final TextEditingController email = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    forgotPasswordPressed() {
-      if (formKey.currentState!.validate()) {
-        //TODO: Kiểm tra email tồn tại, nếu có thì chuyển đến trang nhập mã xác nhận
-        showDialogMessage(
-            title: 'Thông báo',
-            content: 'Mã xác nhận đã được gửi đến email của bạn',
-            context: context);
-      }
-    }
-
     return Container(
       width: 300,
       decoration: const BoxDecoration(
@@ -51,13 +41,14 @@ class ForgotPassword extends StatelessWidget {
               hintText: 'abc123@edu.com',
               textEC: email,
               validator: Validator.emailValidator.call,
-              onFieldSubmitted: (value) {
-                forgotPasswordPressed();
-              },
+              onFieldSubmitted: (value) =>
+                  OnPressed.forgotPasswordPressed(formKey, email.text, context),
             ),
             const SizedBox(height: 15),
             CustomButton(
-                name: 'Gửi mã xác nhận', onPressed: forgotPasswordPressed),
+                name: 'Xác nhận',
+                onPressed: () => OnPressed.forgotPasswordPressed(
+                    formKey, email.text, context)),
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/views/auth/begin.dart';
+import 'package:myapp/pages/begin_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,11 +27,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home: const Begin(),
+      home: const BeginPage(),
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case "/begin":
-            return fadePageRoute(const Begin());
+            return fadePageRoute(const BeginPage());
           default:
             return null;
         }

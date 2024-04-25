@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/views/auth/forgot_password.dart';
-import 'package:myapp/views/auth/login.dart';
-import 'package:myapp/views/auth/register.dart';
+
+import 'forgot_password_page.dart';
+import 'login_page.dart';
+import 'register_page.dart';
 
 // router name: /begin
-class Begin extends StatelessWidget {
-  const Begin({super.key});
+class BeginPage extends StatelessWidget {
+  const BeginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +15,7 @@ class Begin extends StatelessWidget {
         children: [
           Container(
             decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 235, 241, 255),
-              image: DecorationImage(
-                image: AssetImage('assets/images/log/background.jpg'),
-                fit: BoxFit.cover,
-              ),
+              color: Colors.transparent,
             ),
           ),
           const Center(
@@ -63,13 +60,13 @@ class _MiniPageState extends State<MiniPage> {
   Widget build(BuildContext context) {
     switch (beginPageListener.value) {
       case '/login':
-        return customScaleTransition(Login(), context);
+        return customScaleTransition(LoginPage(), context);
       case '/register':
-        return customScaleTransition(Register(), context);
-      case '/forgotPassword':
-        return customScaleTransition(ForgotPassword(), context);
+        return customScaleTransition(RegisterPage(), context);
+      case '/forgot-password':
+        return customScaleTransition(ForgotPasswordPage(), context);
       default:
-        return Login();
+        return LoginPage();
     }
   }
 }

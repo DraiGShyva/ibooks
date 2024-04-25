@@ -28,8 +28,6 @@ class CustomTextField extends StatefulWidget {
   State<CustomTextField> createState() => _CustomTextFieldState();
 }
 
-ChangeNotifier customTextFieldListener = ChangeNotifier();
-
 class _CustomTextFieldState extends State<CustomTextField> {
   bool hiddenButton = true;
 
