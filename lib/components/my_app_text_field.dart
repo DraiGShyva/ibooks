@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CustomTextField extends StatefulWidget {
-  const CustomTextField({
+class MyAppTextField extends StatefulWidget {
+  const MyAppTextField({
     super.key,
     required this.textEC,
     this.labelText = '',
@@ -25,10 +25,10 @@ class CustomTextField extends StatefulWidget {
   final void Function(String)? onFieldSubmitted;
 
   @override
-  State<CustomTextField> createState() => _CustomTextFieldState();
+  State<MyAppTextField> createState() => _MyAppTextFieldState();
 }
 
-class _CustomTextFieldState extends State<CustomTextField> {
+class _MyAppTextFieldState extends State<MyAppTextField> {
   bool hiddenButton = true;
 
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomNotification {
+class MyAppNotification {
   static void showSnackBar({
     required String content,
     required BuildContext context,

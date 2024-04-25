@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 
-import '../components/custom_notification.dart';
+import '../components/my_app_notification.dart';
 import '../data/account_data.dart';
 import '../models/account.dart';
-import '../pages/begin_page.dart';
+import '../route.dart';
 
 class OnPressed {
   static loginPressed(GlobalKey<FormState> formKey, String username,
       String password, BuildContext context) {
     if (formKey.currentState!.validate()) {
       if (AccountData.isAccountValid(username, password)) {
-        CustomNotification.showSnackBar(
+        MyAppNotification.showSnackBar(
             content: 'Tài khoản hoặc mật khẩu không chính xác!',
             context: context);
       } else {
-        CustomNotification.showSnackBar(
+        MyAppNotification.showSnackBar(
             content: 'Đăng nhập thành công', context: context);
+        Navigator.pushNamedAndRemoveUntil(context, HOME, (route) => false);
       }
     }
   }
@@ -25,13 +26,18 @@ class OnPressed {
     FocusScope.of(context).unfocus();
     if (formKey.currentState!.validate()) {
       if (AccountData.isAccountExist(username)) {
-        CustomNotification.showSnackBar(
+        MyAppNotification.showSnackBar(
             content: 'Tài khoản đã tồn tại', context: context);
       } else {
         AccountData.addAccount(Account(username: username, password: password));
-        CustomNotification.showSnackBar(
+        MyAppNotification.showSnackBar(
             content: 'Đăng ký tài khoản thành công', context: context);
-        beginPageListener.value = '/login';
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          LOGIN,
+          (route) => false,
+          arguments: {'username': username},
+        );
       }
     }
   }
@@ -40,13 +46,18 @@ class OnPressed {
       GlobalKey<FormState> formKey, String email, BuildContext context) {
     if (formKey.currentState!.validate()) {
       if (!AccountData.isAccountExist(email)) {
-        CustomNotification.showSnackBar(
+        MyAppNotification.showSnackBar(
             content: 'Email không tồn tại trong hệ thống', context: context);
       } else {
-        CustomNotification.showSnackBar(
+        MyAppNotification.showSnackBar(
             content: 'Mã xác nhận đã được gửi đến email của bạn',
             context: context);
-        beginPageListener.value = '/reset-password';
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          'null',
+          (route) => false,
+          arguments: {'email': email},
+        );
       }
     }
   }
