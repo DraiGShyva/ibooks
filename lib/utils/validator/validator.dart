@@ -1,6 +1,8 @@
 import 'form_validator.dart';
 
 class Validator {
+  Validator._();
+
   static final requiredValidator = MultiValidator([
     RequiredValidator(errorText: 'Trường này không được để trống'),
   ]);

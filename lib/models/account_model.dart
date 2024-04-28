@@ -1,4 +1,4 @@
-class Account {
+class AccountModel {
   String username;
   String password;
   String? email;
@@ -7,7 +7,7 @@ class Account {
   String role;
   String status;
 
-  Account(
+  AccountModel(
       {required this.username,
       required this.password,
       this.email,
@@ -16,7 +16,7 @@ class Account {
       this.role = 'user',
       this.status = 'active'});
 
-  factory Account.fromJson(Map<String, dynamic> json) => Account(
+  factory AccountModel.fromJson(Map<String, dynamic> json) => AccountModel(
       username: json['username'],
       password: json['password'],
       email: json['email'],

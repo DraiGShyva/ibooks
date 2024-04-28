@@ -1,14 +1,18 @@
 //list account data
 
-import 'package:myapp/models/account.dart';
+import 'package:myapp/models/account_model.dart';
 
 class AccountData {
-  static final List<Account> _listAccount = [
-    Account(
-      username: 'admin',
-      password: 'admin',
-    ),
-  ];
+  static late List<AccountModel> _listAccount;
+
+  static void init() {
+    _listAccount = [
+      AccountModel(
+        username: 'admin',
+        password: 'admin',
+      ),
+    ];
+  }
 
   // Check if the account exists
   static bool isAccountExist(String username) {
@@ -22,7 +26,7 @@ class AccountData {
   }
 
   // Add an account if it does not exist
-  static bool addAccount(Account account) {
+  static bool addAccount(AccountModel account) {
     if (!isAccountExist(account.username)) {
       _listAccount.add(account);
       return true;
@@ -31,7 +35,7 @@ class AccountData {
   }
 
   // Update an account
-  static void updateAccount(Account account) {
+  static void updateAccount(AccountModel account) {
     final index = _listAccount
         .indexWhere((element) => element.username == account.username);
     if (index != -1) {

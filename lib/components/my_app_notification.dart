@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MyAppNotification {
+  MyAppNotification._();
+
   static void showSnackBar({
     required String content,
     required BuildContext context,
