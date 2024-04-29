@@ -10,6 +10,8 @@ import 'package:myapp/pages/home/home_page.dart';
 import 'package:myapp/pages/other/load_page.dart';
 
 class MyApp extends StatelessWidget {
+  static String? username;
+
   const MyApp({super.key});
 
   static const String LOAD = '/load';
@@ -24,10 +26,13 @@ class MyApp extends StatelessWidget {
         builder: (context) {
           switch (settings.name) {
             case LOAD:
-              return const LoadPage(
-                nextPage: HOME,
-                removeUntil: true,
-              );
+              if (settings.arguments != null) {
+                return LoadPage(
+                  nextPage: settings.arguments['nextPage'],
+                  removeUntil: settings.arguments['removeUntil'],
+                );
+              }
+              return const LoadPage();
             case LOGIN:
               if (settings.arguments != null) {
                 return LoginPage(
@@ -49,7 +54,7 @@ class MyApp extends StatelessWidget {
                 chapNumber: settings.arguments['chapNumber'],
               );
             default:
-              return MyBottomNavigationBar(); //const LoginPage();
+              return const LoginPage(); //MyBottomNavigationBar();
           }
         },
       );

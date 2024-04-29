@@ -1,5 +1,3 @@
-//list account data
-
 import 'package:myapp/models/account_model.dart';
 
 class AccountData {
@@ -10,6 +8,7 @@ class AccountData {
       AccountModel(
         username: 'admin',
         password: 'admin',
+        favourite: [],
       ),
     ];
   }
@@ -41,5 +40,26 @@ class AccountData {
     if (index != -1) {
       _listAccount[index] = account;
     }
+  }
+
+  // Get favourite list by username
+  static List getFavouriteList(String username) {
+    final account =
+        _listAccount.firstWhere((element) => element.username == username);
+    return account.favourite;
+  }
+
+  // Add a comic to the favourite list
+  static void addFavourite(String username, String comicId) {
+    final account =
+        _listAccount.firstWhere((element) => element.username == username);
+    account.favourite.add(comicId);
+  }
+
+  // Remove a comic from the favourite list
+  static void removeFavourite(String username, String comicId) {
+    final account =
+        _listAccount.firstWhere((element) => element.username == username);
+    account.favourite.remove(comicId);
   }
 }

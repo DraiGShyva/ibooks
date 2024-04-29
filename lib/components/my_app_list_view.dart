@@ -1,6 +1,28 @@
 import 'package:flutter/material.dart';
 
 class MyAppListView extends StatefulWidget {
+  /// The data used to generate the items in the list.
+  ///
+  /// Example:
+  /// ```dart
+  /// List.generate(20, (index) => 'Index $index');
+  /// ```
+
+  /// A function that builds a widget for each item in the list.
+  ///
+  /// It receives the `index` of the current item and returns a widget.
+  ///
+  /// Example:
+  /// ```dart
+  /// (index) => Column(
+  ///   children: [
+  ///     Text('Index $index'),
+  ///     const SizedBox(height: 100.0),
+  ///     const Divider(),
+  ///   ],
+  /// )
+  /// ```
+
   const MyAppListView({
     super.key,
     this.otherWidget = const SizedBox(),
@@ -28,27 +50,41 @@ class _MyAppListViewState extends State<MyAppListView> {
   final ScrollController _scrollController = ScrollController();
   late int _currentMax;
   late int _loadMoreItem;
+  double _currentPixel = 0.0;
   bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
+
+    _scrollController.addListener(
+      () {
+        if (_scrollController.position.pixels * 1.5 >
+            _scrollController.position.maxScrollExtent) {
+          _loadMore();
+        }
+      },
+    );
+
     _currentMax = widget.currentMax >= widget.itemsData.length
         ? widget.itemsData.length
         : widget.currentMax;
+
     _loadMoreItem = widget.loadMoreItem;
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels * 1.5 >
-          _scrollController.position.maxScrollExtent) {
-        _loadMore();
-      }
-    });
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return NotificationListener<ScrollNotification>(
+      onNotification: onScroll,
+      child: listView(),
+    );
   }
 
   void _loadMore() {
@@ -69,51 +105,48 @@ class _MyAppListViewState extends State<MyAppListView> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return NotificationListener<ScrollNotification>(
-      onNotification: (ScrollNotification scrollInfo) {
-        if (scrollInfo.metrics.pixels * 1.5 >
-                scrollInfo.metrics.maxScrollExtent &&
-            !_isLoading &&
-            _currentMax < widget.itemsData.length) {
-          _loadMore();
-        }
-        if (scrollInfo.metrics.axisDirection == AxisDirection.down) {
-          print('Scroll Down');
-          widget.onScrollDown?.call();
-        } else if (scrollInfo.metrics.axisDirection == AxisDirection.up) {
-          print('Scroll Up');
-          widget.onScrollUp?.call();
-        }
-        return true;
-      },
-      child: ListView.builder(
-        controller: _scrollController,
-        itemCount: _currentMax + (_isLoading ? 1 : 0),
-        itemBuilder: (context, index) {
-          if (index == _currentMax) {
-            return const Center(
-              child: Column(
-                children: [
-                  SizedBox(height: 20),
-                  CircularProgressIndicator(),
-                ],
-              ),
-            );
-          }
-          final item = widget.itemsData[index];
-          if (index == 0) {
-            return Column(
+  ListView listView() {
+    return ListView.builder(
+      controller: _scrollController,
+      itemCount: _currentMax + (_isLoading ? 1 : 0),
+      itemBuilder: (context, index) {
+        if (index == _currentMax) {
+          return const Center(
+            child: Column(
               children: [
-                widget.otherWidget,
-                widget.itemWidget(item),
+                SizedBox(height: 20),
+                CircularProgressIndicator(),
               ],
-            );
-          }
-          return widget.itemWidget(item);
-        },
-      ),
+            ),
+          );
+        }
+        final widgetItem = widget.itemWidget(widget.itemsData[index]);
+        if (index == 0) {
+          return Column(
+            children: [
+              widget.otherWidget,
+              widgetItem,
+            ],
+          );
+        }
+        return widgetItem;
+      },
     );
+  }
+
+  bool onScroll(ScrollNotification scrollInfo) {
+    if (scrollInfo.metrics.pixels * 1.5 > scrollInfo.metrics.maxScrollExtent &&
+        !_isLoading &&
+        _currentMax < widget.itemsData.length) {
+      _loadMore();
+    }
+    if (_currentPixel > scrollInfo.metrics.pixels) {
+      widget.onScrollUp?.call();
+      _currentPixel = scrollInfo.metrics.pixels;
+    } else if (_currentPixel < scrollInfo.metrics.pixels) {
+      widget.onScrollDown?.call();
+      _currentPixel = scrollInfo.metrics.pixels;
+    }
+    return true;
   }
 }

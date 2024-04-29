@@ -5,7 +5,7 @@ class LoadPage extends StatefulWidget {
   const LoadPage({
     super.key,
     this.nextPage = MyApp.LOGIN,
-    this.removeUntil = false,
+    this.removeUntil = true,
   });
 
   final String nextPage;

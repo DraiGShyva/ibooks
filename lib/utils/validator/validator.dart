@@ -1,35 +1,43 @@
 import 'form_validator.dart';
 
 class Validator {
+  // Private constructor to prevent instantiation
   Validator._();
 
+  // Validator for required fields
   static final requiredValidator = MultiValidator([
-    RequiredValidator(errorText: 'Trường này không được để trống'),
+    RequiredValidator(errorText: 'This field is required'),
   ]);
 
+  // Validator for double values
   static final doubleValidator = MultiValidator([
-    RequiredValidator(errorText: 'Trường này không được để trống'),
-    DoubleValidator(errorText: 'Trường này phải là số'),
+    RequiredValidator(errorText: 'This field is required'),
+    DoubleValidator(errorText: 'This field must be a number'),
   ]);
 
+  // Validator for non-zero values
   static final checkValueValidator = MultiValidator([
-    RequiredValidator(errorText: 'Trường này không được để trống'),
-    CheckValueValidator(errorText: 'Trường phải là một số khác 0'),
+    RequiredValidator(errorText: 'This field is required'),
+    CheckValueValidator(errorText: 'Field must be a number other than 0'),
   ]);
 
+  // Validator for passwords with minimum length
   static final passwordValidator = MultiValidator([
-    RequiredValidator(errorText: 'Trường này không được để trống'),
-    MinLengthValidator(6, errorText: 'Mật khẩu phải dài ít nhất 6 ký tự'),
+    RequiredValidator(errorText: 'This field is required'),
+    MinLengthValidator(6,
+        errorText: 'Password must be at least 6 characters long'),
   ]);
 
+  // Validator for email addresses
   static final emailValidator = MultiValidator([
-    RequiredValidator(errorText: 'Trường này không được để trống'),
-    EmailValidator(errorText: 'Địa chỉ email không hợp lệ'),
+    RequiredValidator(errorText: 'This field is required'),
+    EmailValidator(errorText: 'Invalid email address'),
   ]);
 
+  // Validator for confirming password match
   static MultiValidator confirmPasswordValidator(String? password) =>
       MultiValidator([
-        RequiredValidator(errorText: 'Trường này không được để trống'),
-        MatchValidator(password, errorText: 'Mật khẩu xác nhận không khớp'),
+        RequiredValidator(errorText: 'This field is required'),
+        MatchValidator(password, errorText: 'Passwords do not match'),
       ]);
 }

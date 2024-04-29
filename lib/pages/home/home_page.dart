@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:myapp/components/my_app_auto_page_view.dart';
 import 'package:myapp/components/my_app_bottom_navigation_bar.dart';
 import 'package:myapp/components/my_app_image.dart';
+import 'package:myapp/components/my_app_item_comic.dart';
 import 'package:myapp/components/my_app_list_view.dart';
-import 'package:myapp/components/my_app_text.dart';
 import 'package:myapp/data/comic_data.dart';
-import 'package:myapp/models/comic_model.dart';
 import 'package:myapp/my_app.dart';
 import 'package:myapp/pages/home/account_page.dart';
 import 'package:myapp/pages/home/chat_page.dart';
@@ -33,7 +32,11 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: MyAppListView(
         itemsData: ComicData.comics,
-        itemWidget: (comic) => itemComic(context, comic),
+        itemWidget: (comic) => MyAppItemComic(
+          context: context,
+          comic: comic,
+          setState: () => setState(() {}),
+        ),
         otherWidget: MyAppAutoPageView(
           pages: List.generate(
             ComicData.comics.length < 3 ? ComicData.comics.length : 3,
@@ -50,76 +53,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Padding itemComic(BuildContext context, ComicModel comic) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          padding: const EdgeInsets.all(0),
-        ),
-        onPressed: () {
-          Navigator.pushNamed(context, MyApp.LIST_CHAPTER, arguments: {
-            'id': comic.id,
-          });
-        },
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20),
-                bottomLeft: Radius.circular(20),
-              ),
-              child: MyAppImage(
-                imageUrl: '${comic.image}',
-                height: 160,
-                width: 120,
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    MyAppText(
-                      text: '${comic.title}',
-                      style: MyAppTextStyles.mediumBold,
-                      maxLines: 1,
-                      overflow: true,
-                    ),
-                    MyAppText(
-                      text: 'Tác giả: ${comic.author}',
-                      style: MyAppTextStyles.smallGrey,
-                      maxLines: 1,
-                      overflow: true,
-                    ),
-                    MyAppText(
-                      text: '${comic.description}',
-                      style: MyAppTextStyles.small,
-                      maxLines: 3,
-                      overflow: true,
-                    ),
-                    const SizedBox(height: 10),
-                    MyAppText(
-                      text: 'Thể loại: ${comic.category}',
-                      style: MyAppTextStyles.smallGrey,
-                      maxLines: 1,
-                      overflow: true,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );

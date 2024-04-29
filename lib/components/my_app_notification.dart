@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/components/my_app_text.dart';
 
 class MyAppNotification {
   MyAppNotification._();
@@ -8,7 +9,7 @@ class MyAppNotification {
     required BuildContext context,
   }) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(content),
+      content: MyAppText(text: content, style: MyAppTextStyles.small),
       action: SnackBarAction(
         label: 'Undo',
         onPressed: () {
@@ -20,7 +21,7 @@ class MyAppNotification {
 
   static void showAlertDialog({
     required String title,
-    required String content,
+    required Widget content,
     required BuildContext context,
     List<Widget>? listButton,
   }) {
@@ -28,8 +29,8 @@ class MyAppNotification {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(title),
-          content: Text(content),
+          title: MyAppText(text: title, style: MyAppTextStyles.mediumBold),
+          content: content,
           actions: listButton ??
               [
                 TextButton(
