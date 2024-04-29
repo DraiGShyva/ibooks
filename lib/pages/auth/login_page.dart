@@ -57,14 +57,20 @@ class _LoginPageState extends State<LoginPage> {
             textEC: passwordController,
             isPassword: true,
             validator: Validator.passwordValidator.call,
-            onFieldSubmitted: (value) => AutheUtils.loginPressed(formKey,
-                usernameController.text, passwordController.text, context),
+            onFieldSubmitted: (value) => AutheUtils.loginPressed(
+                formKey: formKey,
+                username: usernameController.text,
+                password: passwordController.text,
+                context: context),
           ),
           const SizedBox(height: 15),
           MyAppButton(
             name: 'Login',
-            onPressed: () => AutheUtils.loginPressed(formKey,
-                usernameController.text, passwordController.text, context),
+            onPressed: () => AutheUtils.loginPressed(
+                formKey: formKey,
+                username: usernameController.text,
+                password: passwordController.text,
+                context: context),
           ),
           const SizedBox(height: 20),
           const MyAppText(

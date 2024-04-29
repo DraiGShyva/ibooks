@@ -1,30 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/components/my_app_text.dart';
 
 class MyAppNotification {
   MyAppNotification._();
 
-  static void showSnackBar({
-    required String content,
-    required BuildContext context,
-  }) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: MyAppText(text: content, style: MyAppTextStyles.small),
-      action: SnackBarAction(
-        label: 'Undo',
-        onPressed: () {
-          // Some code to undo the change.
-        },
-      ),
-    ));
+  static void showToast(
+      {required String content, required BuildContext context}) {
+    Fluttertoast.showToast(
+      msg: content,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.grey[800],
+      textColor: Colors.white,
+    );
   }
 
-  static void showAlertDialog({
-    required String title,
-    required Widget content,
-    required BuildContext context,
-    List<Widget>? listButton,
-  }) {
+  static void showAlertDialog(
+      {required String title,
+      required Widget content,
+      required BuildContext context,
+      List<Widget>? listButton}) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -40,6 +36,7 @@ class MyAppNotification {
                   child: const Text('OK'),
                 ),
               ],
+          actionsAlignment: MainAxisAlignment.spaceBetween,
         );
       },
     );

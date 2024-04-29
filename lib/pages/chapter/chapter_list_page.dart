@@ -15,7 +15,6 @@ class _ChapterListPageState extends State<ChapterListPage> {
   @override
   void initState() {
     super.initState();
-    ChapterData.init();
   }
 
   @override

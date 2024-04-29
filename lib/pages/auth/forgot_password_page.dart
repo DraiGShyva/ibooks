@@ -33,14 +33,18 @@ class ForgotPasswordPage extends StatelessWidget {
             textEC: emailController,
             validator: Validator.emailValidator.call,
             onFieldSubmitted: (value) => AutheUtils.forgotPasswordPressed(
-                formKey, emailController.text, context),
+                formKey: formKey,
+                email: emailController.text,
+                context: context),
           ),
           const SizedBox(height: 15),
           MyAppButton(
-              name: 'Confirm',
-              onPressed: () => AutheUtils.forgotPasswordPressed(
-                  formKey, emailController.text, context)),
-          const SizedBox(height: 10),
+            name: 'Confirm',
+            onPressed: () => AutheUtils.forgotPasswordPressed(
+                formKey: formKey,
+                email: emailController.text,
+                context: context),
+          ),
         ],
       ),
     );

@@ -7,30 +7,34 @@ import 'package:myapp/my_app.dart';
 class AutheUtils {
   AutheUtils._();
 
-  static loginPressed(GlobalKey<FormState> formKey, String username,
-      String password, BuildContext context) {
+  static loginPressed(
+      {required GlobalKey<FormState> formKey,
+      required String username,
+      required String password,
+      required BuildContext context}) {
     if (formKey.currentState!.validate()) {
-      AccountData.init();
       if (AccountData.isAccountValid(username, password)) {
-        MyAppNotification.showSnackBar(
-            content: 'Username or password incorrectly!', context: context);
-      } else {
         MyApp.username = username;
         Navigator.pushNamed(context, MyApp.LOAD, arguments: {
           'nextPage': MyApp.HOME,
           'removeUntil': true,
         });
+      } else {
+        MyAppNotification.showToast(
+            content: 'Username or password incorrectly!', context: context);
       }
     }
   }
 
-  static registerPressed(GlobalKey<FormState> formKey, String username,
-      String password, BuildContext context) {
+  static registerPressed(
+      {required GlobalKey<FormState> formKey,
+      required String username,
+      required String password,
+      required BuildContext context}) {
     FocusScope.of(context).unfocus();
     if (formKey.currentState!.validate()) {
-      // AccountData.init();
       if (AccountData.isAccountExist(username)) {
-        MyAppNotification.showSnackBar(
+        MyAppNotification.showToast(
             content: 'Account already exists', context: context);
       } else {
         AccountData.addAccount(
@@ -40,7 +44,7 @@ class AutheUtils {
             favourite: [],
           ),
         );
-        MyAppNotification.showSnackBar(
+        MyAppNotification.showToast(
             content: 'Successful account registration', context: context);
         Navigator.pushNamedAndRemoveUntil(
           context,
@@ -53,14 +57,15 @@ class AutheUtils {
   }
 
   static forgotPasswordPressed(
-      GlobalKey<FormState> formKey, String email, BuildContext context) {
+      {required GlobalKey<FormState> formKey,
+      required String email,
+      required BuildContext context}) {
     if (formKey.currentState!.validate()) {
-      // AccountData.init();
       if (!AccountData.isAccountExist(email)) {
-        MyAppNotification.showSnackBar(
+        MyAppNotification.showToast(
             content: 'Email does not exist in the system', context: context);
       } else {
-        MyAppNotification.showSnackBar(
+        MyAppNotification.showToast(
             content: 'The confirmation code has been sent to your email',
             context: context);
         Navigator.pushNamedAndRemoveUntil(

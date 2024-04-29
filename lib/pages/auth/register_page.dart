@@ -59,14 +59,20 @@ class RegisterPage extends StatelessWidget {
                 Validator.confirmPasswordValidator(passwordController.text)
                     .call,
             focusNode: confirmPasswordFocusNode,
-            onFieldSubmitted: (value) => AutheUtils.registerPressed(formKey,
-                usernameController.text, passwordController.text, context),
+            onFieldSubmitted: (value) => AutheUtils.registerPressed(
+                formKey: formKey,
+                username: usernameController.text,
+                password: passwordController.text,
+                context: context),
           ),
           const SizedBox(height: 15),
           MyAppButton(
             name: 'Register',
-            onPressed: () => AutheUtils.registerPressed(formKey,
-                usernameController.text, passwordController.text, context),
+            onPressed: () => AutheUtils.registerPressed(
+                formKey: formKey,
+                username: usernameController.text,
+                password: passwordController.text,
+                context: context),
           ),
         ],
       ),

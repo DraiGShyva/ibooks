@@ -39,6 +39,10 @@ class MyAppItemComic extends StatelessWidget {
           });
         },
         onLongPress: () {
+          String data =
+              AccountData.getFavouriteList(MyApp.username!).contains(comic.id)
+                  ? 'Remove from favorite list'
+                  : 'Add favorite list';
           MyAppNotification.showAlertDialog(
             context: context,
             title: 'Thông tin truyện',
@@ -76,28 +80,31 @@ class MyAppItemComic extends StatelessWidget {
               TextButton(
                 onPressed: () {
                   if (MyApp.username == null) {
-                    MyAppNotification.showSnackBar(
+                    MyAppNotification.showToast(
                       content: 'You need to login to add your favorite comic.',
                       context: context,
                     );
                   } else if (AccountData.getFavouriteList(MyApp.username!)
                       .contains(comic.id)) {
                     AccountData.removeFavourite(MyApp.username!, comic.id);
-                    MyAppNotification.showSnackBar(
+                    MyAppNotification.showToast(
                       content: 'Removed from your favorite list.',
                       context: context,
                     );
+                    data = 'Remove from favorite list';
                     setState != null ? setState!() : null;
+                    Navigator.pop(context);
                   } else {
                     AccountData.addFavourite(MyApp.username!, comic.id);
-                    MyAppNotification.showSnackBar(
+                    MyAppNotification.showToast(
                       content: 'Added to your favorite list.',
                       context: context,
                     );
+                    data = 'Add favorite list';
                     setState != null ? setState!() : null;
                   }
                 },
-                child: const Text('Thêm vào yêu thích'),
+                child: Text(data),
               ),
               TextButton(
                 onPressed: () {
