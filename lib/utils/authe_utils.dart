@@ -46,12 +46,15 @@ class AutheUtils {
         );
         MyAppNotification.showToast(
             content: 'Successful account registration', context: context);
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          MyApp.LOGIN,
-          (route) => false,
-          arguments: {'username': username},
-        );
+        MyAppNotification.showAlertDialog(context: context);
+        Future.delayed(const Duration(seconds: 1), () {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            MyApp.LOGIN,
+            (route) => false,
+            arguments: {'username': username},
+          );
+        });
       }
     }
   }

@@ -17,8 +17,8 @@ class MyAppNotification {
   }
 
   static void showAlertDialog(
-      {required String title,
-      required Widget content,
+      {String title = '',
+      Widget? content,
       required BuildContext context,
       List<Widget>? listButton}) {
     showDialog(
@@ -26,16 +26,11 @@ class MyAppNotification {
       builder: (BuildContext context) {
         return AlertDialog(
           title: MyAppText(text: title, style: MyAppTextStyles.mediumBold),
-          content: content,
-          actions: listButton ??
-              [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
+          content: content ??
+              const CircleAvatar(
+                child: CircularProgressIndicator(),
+              ),
+          actions: listButton,
           actionsAlignment: MainAxisAlignment.spaceBetween,
         );
       },

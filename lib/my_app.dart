@@ -63,10 +63,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
+      theme: buildTheme(),
       onGenerateRoute: (settings) => onGenerateRoute(settings),
     );
   }
 }
+
+ThemeData buildTheme() => ThemeData(
+      useMaterial3: true,
+    );
