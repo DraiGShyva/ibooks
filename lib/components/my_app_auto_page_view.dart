@@ -9,7 +9,7 @@ class MyAppAutoPageView extends StatefulWidget {
       Center(child: Text('Page 2')),
       Center(child: Text('Page 3')),
     ],
-    this.height = 200.0,
+    this.height = 250.0,
   });
 
   final List<Widget> pages;
@@ -54,16 +54,8 @@ class _MyAppAutoPageViewState extends State<MyAppAutoPageView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: widget.height,
-      decoration: const BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            blurRadius: 10,
-          ),
-        ],
-      ),
       child: PageView(
         controller: _pageController,
         children: widget.pages,

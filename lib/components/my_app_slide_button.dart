@@ -108,8 +108,6 @@ class _MyAppSlideButtonState extends State<MyAppSlideButton>
                     text: widget.text ?? '',
                     style: MyAppTextStyles.smallBlue,
                     maxLines: 2,
-                    // textAlign:
-                    //     widget.reverse ? TextAlign.right : TextAlign.left,
                   ),
                 ),
               ),

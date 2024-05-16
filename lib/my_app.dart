@@ -54,7 +54,8 @@ class MyApp extends StatelessWidget {
                 chapNumber: settings.arguments['chapNumber'],
               );
             default:
-              return const LoginPage(); //MyBottomNavigationBar();
+              return const LoginPage();
+            // return MyBottomNavigationBar();
           }
         },
       );

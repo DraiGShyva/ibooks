@@ -63,7 +63,7 @@ class MyAppItemComic extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 MyAppText(
-                  text: 'Thể loại: ${comic.category}',
+                  text: 'Thể loại: ${comic.category?.join(', ')}',
                   style: MyAppTextStyles.small,
                   maxLines: 10,
                 ),
@@ -156,7 +156,7 @@ class MyAppItemComic extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     MyAppText(
-                      text: 'Thể loại: ${comic.category}',
+                      text: 'Thể loại: ${comic.category?.join(', ')}',
                       style: MyAppTextStyles.smallGrey,
                       maxLines: 1,
                       overflow: true,

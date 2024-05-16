@@ -2,7 +2,7 @@ class ComicModel {
   final String id;
   final String? title;
   final String? author;
-  final String? category;
+  final List<String>? category;
   final String? description;
   final String? image;
 
