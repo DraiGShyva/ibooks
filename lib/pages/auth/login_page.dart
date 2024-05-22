@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/components/my_app_button.dart';
-import 'package:myapp/components/my_app_slide_button.dart';
+import 'package:get/get.dart';
+import 'package:myapp/components/my_app_button_rounded.dart';
+import 'package:myapp/components/my_app_notification.dart';
 import 'package:myapp/components/my_app_text.dart';
 import 'package:myapp/components/my_app_text_field.dart';
-import 'package:myapp/my_app.dart';
-import 'package:myapp/utils/authe_utils.dart';
-import 'package:myapp/utils/validator/validator.dart';
+import 'package:myapp/controller/account_controller.dart';
+import 'package:myapp/controller/app_controller.dart';
+import 'package:myapp/utils/local_image.dart';
+import 'package:myapp/utils/route.dart';
+import 'package:myapp/utils/validator.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, this.username});
@@ -31,6 +34,37 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    loginPressed() {
+      if (formKey.currentState!.validate()) {
+        final accountController = Get.put(AccountController());
+        final appController = Get.put(AppController());
+        accountController.isAccountValid(
+          username: usernameController.text,
+          password: passwordController.text,
+          onComplete: (check) {
+            MyAppNotification.showAlertDialog(context: context);
+            Future.delayed(const Duration(seconds: 1), () {
+              if (check) {
+                appController.authenKey.value = usernameController.text;
+                appController.saveAuthenKey();
+                MyAppNotification.showToast(
+                    content: 'Login successful!', context: context);
+                Navigator.pushNamed(context, LOAD, arguments: {
+                  'nextPage': HOME,
+                  'removeUntil': true,
+                });
+              } else {
+                MyAppNotification.showToast(
+                    content: 'Username or password incorrectly!',
+                    context: context);
+                Navigator.pop(context);
+              }
+            });
+          },
+        );
+      }
+    }
+
     Widget form = Form(
       key: formKey,
       child: Column(
@@ -38,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           Container(
               alignment: Alignment.topLeft,
-              child: Image.asset('assets/images/log/hello.png', width: 150)),
+              child: Image.asset(HELLO_LOG_IMG, width: 150)),
           const SizedBox(height: 10),
           const MyAppText(
               text: 'Log in to the application', style: MyAppTextStyles.small),
@@ -57,47 +91,23 @@ class _LoginPageState extends State<LoginPage> {
             textEC: passwordController,
             isPassword: true,
             validator: Validator.passwordValidator.call,
-            onFieldSubmitted: (value) => AutheUtils.loginPressed(
-                formKey: formKey,
-                username: usernameController.text,
-                password: passwordController.text,
-                context: context),
+            onFieldSubmitted: (value) => loginPressed(),
           ),
           const SizedBox(height: 15),
-          MyAppButton(
+          MyAppRoundedButton(
             name: 'Login',
-            onPressed: () => AutheUtils.loginPressed(
-                formKey: formKey,
-                username: usernameController.text,
-                password: passwordController.text,
-                context: context),
-          ),
-          const SizedBox(height: 20),
-          const MyAppText(
-            text: 'Login with social networks:',
-            style: MyAppTextStyles.smallBlue,
+            onPressed: () => loginPressed(),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, MyApp.LOAD);
-                },
-                icon: const Image(
-                  image: AssetImage('assets/images/log/logo-facebook.png'),
-                  width: 30,
-                ),
-              ),
-              const MyAppText(text: '|', style: MyAppTextStyles.small),
-              IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, MyApp.LOAD);
-                },
-                icon: const Image(
-                  image: AssetImage('assets/images/log/logo-google.png'),
-                  width: 30,
-                ),
+              const MyAppText(
+                  text: 'Do not have an account?',
+                  style: MyAppTextStyles.small),
+              TextButton(
+                onPressed: () => Navigator.pushNamed(context, REGISTER),
+                child: const MyAppText(
+                    text: 'Register', style: MyAppTextStyles.small),
               ),
             ],
           ),
@@ -105,30 +115,43 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
 
-    List<Widget> slideButton = [
-      Positioned(
-        bottom: 100,
-        left: 0,
-        child: MyAppSlideButton(
-          onSlideComplete: () => Navigator.pushNamed(context, MyApp.FORGOT),
-          text: 'Forgot\npassword',
+    return Scaffold(
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(BG_LOG_IMG),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+                    child: Container(
+                      width: 300,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                        border: Border.fromBorderSide(BorderSide(
+                            color: Color.fromARGB(64, 0, 0, 0), width: 1.0)),
+                        boxShadow: [
+                          BoxShadow(color: Colors.black, blurRadius: 10)
+                        ],
+                      ),
+                      padding: const EdgeInsetsDirectional.all(20.0),
+                      child: form,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
-      Positioned(
-        bottom: 100,
-        right: 0,
-        child: MyAppSlideButton(
-          onSlideComplete: () => Navigator.pushNamed(context, MyApp.REGISTER),
-          text: 'Sign Up',
-          reverse: true,
-        ),
-      ),
-    ];
-
-    return AutheUtils.autheScaffold(
-      context: context,
-      containerChild: form,
-      otherChild: slideButton,
     );
   }
 }

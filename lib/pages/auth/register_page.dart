@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/components/my_app_button.dart';
-import 'package:myapp/components/my_app_slide_button.dart';
+import 'package:get/get.dart';
+import 'package:myapp/components/my_app_button_rounded.dart';
+import 'package:myapp/components/my_app_notification.dart';
 import 'package:myapp/components/my_app_text.dart';
 import 'package:myapp/components/my_app_text_field.dart';
-import 'package:myapp/my_app.dart';
-import 'package:myapp/utils/authe_utils.dart';
-import 'package:myapp/utils/validator/validator.dart';
+import 'package:myapp/controller/account_controller.dart';
+import 'package:myapp/models/account_model.dart';
+import 'package:myapp/utils/local_image.dart';
+import 'package:myapp/utils/route.dart';
+import 'package:myapp/utils/validator.dart';
 
 class RegisterPage extends StatelessWidget {
   RegisterPage({super.key});
@@ -16,6 +19,40 @@ class RegisterPage extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey();
   final FocusNode confirmPasswordFocusNode = FocusNode();
 
+  registerPressed(
+      {required GlobalKey<FormState> formKey,
+      required String username,
+      required String password,
+      required BuildContext context}) {
+    FocusScope.of(context).unfocus();
+    if (formKey.currentState!.validate()) {
+      final accountController = Get.put(AccountController());
+      accountController.addAccount(
+        newAccount: Account(
+          username: username,
+          password: password,
+          favourite: [],
+        ),
+        onComplete: (message, isSuccessful) {
+          MyAppNotification.showAlertDialog(context: context);
+          Future.delayed(const Duration(seconds: 1), () {
+            if (isSuccessful) {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                LOGIN,
+                (route) => false,
+                arguments: {'username': username},
+              );
+            } else {
+              Navigator.pop(context);
+            }
+            MyAppNotification.showToast(content: message, context: context);
+          });
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget form = Form(
@@ -25,7 +62,7 @@ class RegisterPage extends StatelessWidget {
         children: [
           Container(
             alignment: Alignment.topLeft,
-            child: Image.asset('assets/images/log/hello.png', width: 150),
+            child: Image.asset(HELLO_LOG_IMG, width: 150),
           ),
           const SizedBox(height: 10),
           const MyAppText(
@@ -59,44 +96,72 @@ class RegisterPage extends StatelessWidget {
                 Validator.confirmPasswordValidator(passwordController.text)
                     .call,
             focusNode: confirmPasswordFocusNode,
-            onFieldSubmitted: (value) => AutheUtils.registerPressed(
+            onFieldSubmitted: (value) => FocusScope.of(context).unfocus(),
+          ),
+          const SizedBox(height: 15),
+          MyAppRoundedButton(
+            name: 'Register',
+            onPressed: () => registerPressed(
                 formKey: formKey,
                 username: usernameController.text,
                 password: passwordController.text,
                 context: context),
           ),
-          const SizedBox(height: 15),
-          MyAppButton(
-            name: 'Register',
-            onPressed: () => AutheUtils.registerPressed(
-                formKey: formKey,
-                username: usernameController.text,
-                password: passwordController.text,
-                context: context),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const MyAppText(
+                  text: 'Do you have an account?',
+                  style: MyAppTextStyles.small),
+              TextButton(
+                onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                    context, LOGIN, (route) => false),
+                child: const MyAppText(
+                    text: 'Log in', style: MyAppTextStyles.small),
+              ),
+            ],
           ),
         ],
       ),
     );
 
-    List<Widget> slideButton = [
-      Positioned(
-        bottom: 100,
-        left: 0,
-        child: MyAppSlideButton(
-          onSlideComplete: () => Navigator.pushNamedAndRemoveUntil(
-            context,
-            MyApp.LOGIN,
-            (route) => false,
-          ),
-          text: 'Sign In',
+    return Scaffold(
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(BG_LOG_IMG),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+                    child: Container(
+                      width: 300,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                        border: Border.fromBorderSide(BorderSide(
+                            color: Color.fromARGB(64, 0, 0, 0), width: 1.0)),
+                        boxShadow: [
+                          BoxShadow(color: Colors.black, blurRadius: 10)
+                        ],
+                      ),
+                      padding: const EdgeInsetsDirectional.all(20.0),
+                      child: form,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
-      )
-    ];
-
-    return AutheUtils.autheScaffold(
-      context: context,
-      containerChild: form,
-      otherChild: slideButton,
+      ),
     );
   }
 }

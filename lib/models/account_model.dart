@@ -1,42 +1,45 @@
-class AccountModel {
+class Account {
   final String username;
   final String password;
-  final String? email;
-  final String? phone;
-  final String? address;
-  final String role;
-  final String status;
-  final List favourite;
+  final List<String> favourite;
 
-  AccountModel({
+  Account({
     required this.username,
     required this.password,
-    this.email,
-    this.phone,
-    this.address,
-    this.role = 'user',
-    this.status = 'active',
     required this.favourite,
   });
 
-  factory AccountModel.fromJson(Map<String, dynamic> json) => AccountModel(
+  factory Account.fromJson(Map<String, dynamic> json) => Account(
         username: json['username'],
         password: json['password'],
-        email: json['email'],
-        phone: json['phone'],
-        address: json['address'],
-        role: json['role'],
-        status: json['status'],
-        favourite: json['favourite'],
+        favourite: List<String>.from(json['favourite']),
       );
 
   Map<String, dynamic> toJson() => {
         'username': username,
         'password': password,
-        'email': email,
-        'phone': phone,
-        'address': address,
-        'role': role,
-        'status': status
+        'favourite': favourite,
       };
+}
+
+class ListAccount {
+  final List<Account> data;
+
+  ListAccount({required this.data});
+
+  factory ListAccount.fromJson(List<dynamic> json) {
+    List<Account> listAccount = [];
+    for (var element in json) {
+      listAccount.add(Account.fromJson(element));
+    }
+    return ListAccount(data: listAccount);
+  }
+
+  List<Map<String, dynamic>> toJson() {
+    List<Map<String, dynamic>> listAccount = [];
+    for (var element in this.data) {
+      listAccount.add(element.toJson());
+    }
+    return listAccount;
+  }
 }

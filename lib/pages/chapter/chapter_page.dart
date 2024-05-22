@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/components/my_app_image.dart';
 import 'package:myapp/components/my_app_list_view.dart';
-import 'package:myapp/data/chapter_data.dart';
+import 'package:myapp/controller/chapter_controller.dart';
 
 class ChapterPage extends StatefulWidget {
   const ChapterPage({super.key, required this.id, required this.chapNumber});
@@ -18,7 +18,7 @@ double appBarOpacity = 1.0;
 class _ChapterPageState extends State<ChapterPage> {
   @override
   Widget build(BuildContext context) {
-    var chapter = ChapterData.chapters
+    var chapter = ChapterController.chapters
         .firstWhere((element) => element.id == widget.id)
         .chapters
         .firstWhere((element) => element.chapNumber == widget.chapNumber);
@@ -40,8 +40,8 @@ class _ChapterPageState extends State<ChapterPage> {
       body: MyAppListView(
         currentMax: 20,
         loadMoreItem: 20,
-        itemsData: List.generate(
-            chapter.imageCount, (index) => '${chapter.images}${index + 1}.jpg'),
+        itemsList: List.generate(
+            chapter.images.length, (index) => chapter.images[index]),
         itemWidget: (item) => MyAppImage(imageUrl: item),
         onScrollDown: () {
           setState(() {

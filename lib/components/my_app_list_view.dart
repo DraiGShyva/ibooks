@@ -25,18 +25,18 @@ class MyAppListView extends StatefulWidget {
 
   const MyAppListView({
     super.key,
-    this.otherWidget = const SizedBox(),
-    required this.itemsData,
+    this.startWidget = const SizedBox(),
     required this.itemWidget,
+    required this.itemsList,
     this.currentMax = 10,
     this.loadMoreItem = 5,
     this.onScrollDown,
     this.onScrollUp,
   });
 
-  final Widget otherWidget;
-  final List<dynamic> itemsData;
+  final Widget startWidget;
   final Widget Function(dynamic) itemWidget;
+  final List<dynamic> itemsList;
   final int currentMax;
   final int loadMoreItem;
   final void Function()? onScrollDown;
@@ -66,8 +66,8 @@ class _MyAppListViewState extends State<MyAppListView> {
       },
     );
 
-    _currentMax = widget.currentMax >= widget.itemsData.length
-        ? widget.itemsData.length
+    _currentMax = widget.currentMax >= widget.itemsList.length
+        ? widget.itemsList.length
         : widget.currentMax;
 
     _loadMoreItem = widget.loadMoreItem;
@@ -88,13 +88,13 @@ class _MyAppListViewState extends State<MyAppListView> {
   }
 
   void _loadMore() {
-    if (!_isLoading && _currentMax < widget.itemsData.length) {
+    if (!_isLoading && _currentMax < widget.itemsList.length) {
       setState(() {
         _isLoading = true;
         Future.delayed(const Duration(seconds: 1), () {
           setState(() {
-            if (_currentMax + _loadMoreItem >= widget.itemsData.length) {
-              _currentMax = widget.itemsData.length;
+            if (_currentMax + _loadMoreItem >= widget.itemsList.length) {
+              _currentMax = widget.itemsList.length;
             } else {
               _currentMax += _loadMoreItem;
             }
@@ -120,11 +120,11 @@ class _MyAppListViewState extends State<MyAppListView> {
             ),
           );
         }
-        final widgetItem = widget.itemWidget(widget.itemsData[index]);
+        final widgetItem = widget.itemWidget(widget.itemsList[index]);
         if (index == 0) {
           return Column(
             children: [
-              widget.otherWidget,
+              widget.startWidget,
               widgetItem,
             ],
           );
@@ -137,7 +137,7 @@ class _MyAppListViewState extends State<MyAppListView> {
   bool onScroll(ScrollNotification scrollInfo) {
     if (scrollInfo.metrics.pixels * 1.5 > scrollInfo.metrics.maxScrollExtent &&
         !_isLoading &&
-        _currentMax < widget.itemsData.length) {
+        _currentMax < widget.itemsList.length) {
       _loadMore();
     }
     if (_currentPixel > scrollInfo.metrics.pixels) {

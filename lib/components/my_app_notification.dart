@@ -17,7 +17,7 @@ class MyAppNotification {
   }
 
   static void showAlertDialog(
-      {String title = '',
+      {String title = 'Đang xử lý',
       Widget? content,
       required BuildContext context,
       List<Widget>? listButton}) {
@@ -25,7 +25,10 @@ class MyAppNotification {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: MyAppText(text: title, style: MyAppTextStyles.mediumBold),
+          title: MyAppText(
+              text: title,
+              style: MyAppTextStyles.mediumBold,
+              textAlign: TextAlign.center),
           content: content ??
               const CircleAvatar(
                 child: CircularProgressIndicator(),

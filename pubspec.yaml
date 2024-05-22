@@ -11,9 +11,11 @@ dependencies:
   cupertino_icons: ^1.0.8
   provider: ^6.1.1
   animated_notch_bottom_bar: ^1.0.0
-  cached_network_image: ^3.2.3
+  cached_network_image: ^3.3.1
   flutter_cache_manager: ^3.3.2
   fluttertoast: ^8.2.5
+  shared_preferences: ^2.2.3
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:
@@ -22,8 +24,11 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/images/
     - assets/images/log/
-    - assets/images/error/
+    - assets/images/banners/
+    - assets/images/comics/
+    
 
   # fonts:
   #   - family: Schyler

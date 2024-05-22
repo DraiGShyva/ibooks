@@ -1,6 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:myapp/utils/local_image.dart';
 
 class MyAppImage extends StatefulWidget {
   const MyAppImage({
@@ -8,11 +9,13 @@ class MyAppImage extends StatefulWidget {
     required this.imageUrl,
     this.height,
     this.width,
+    this.fit = BoxFit.cover,
   });
 
   final String imageUrl;
   final double? height;
   final double? width;
+  final BoxFit? fit;
 
   @override
   State<MyAppImage> createState() => _MyAppImageState();
@@ -25,7 +28,7 @@ class _MyAppImageState extends State<MyAppImage> {
       imageUrl: widget.imageUrl,
       height: widget.height,
       width: widget.width,
-      fit: BoxFit.cover,
+      fit: widget.fit,
       placeholder: (context, url) => const Center(
         child: Padding(
           padding: EdgeInsets.all(20.0),
@@ -33,10 +36,10 @@ class _MyAppImageState extends State<MyAppImage> {
         ),
       ),
       errorWidget: (context, url, error) => Image.asset(
-        'assets/images/error/oops.jpg',
+        widget.imageUrl.contains('assets') ? widget.imageUrl : ERROR_IMG,
         height: widget.height,
         width: widget.width,
-        fit: BoxFit.cover,
+        fit: widget.fit,
       ),
       cacheManager: CacheManager(
         Config(

@@ -49,13 +49,13 @@ class MyAppTextStyles {
   static const TextStyle small = TextStyle(fontSize: smallSize);
 
   static const TextStyle largeGrey =
-      TextStyle(fontSize: largeSize, color: Colors.grey);
+      TextStyle(fontSize: largeSize, color: Colors.blueGrey);
 
   static const TextStyle mediumGrey =
-      TextStyle(fontSize: mediumSize, color: Colors.grey);
+      TextStyle(fontSize: mediumSize, color: Colors.blueGrey);
 
   static const TextStyle smallGrey =
-      TextStyle(fontSize: smallSize, color: Colors.grey);
+      TextStyle(fontSize: smallSize, color: Colors.blueGrey);
 
   static const TextStyle largeBlue =
       TextStyle(fontSize: largeSize, color: Color.fromARGB(255, 0, 152, 198));

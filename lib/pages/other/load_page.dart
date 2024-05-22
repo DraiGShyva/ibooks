@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/my_app.dart';
+import 'package:myapp/utils/route.dart';
 
 class LoadPage extends StatefulWidget {
   const LoadPage({
     super.key,
-    this.nextPage = MyApp.LOGIN,
-    this.removeUntil = true,
+    this.nextPage = LOGIN,
   });
 
   final String nextPage;
-  final bool removeUntil;
 
   @override
   State<LoadPage> createState() => _LoadPageState();
@@ -23,7 +21,7 @@ class _LoadPageState extends State<LoadPage> {
       Navigator.pushNamedAndRemoveUntil(
         context,
         widget.nextPage,
-        (route) => !widget.removeUntil,
+        (route) => false,
       );
     });
   }

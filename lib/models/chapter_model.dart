@@ -1,36 +1,48 @@
-//chapter model
-class ChapterModel {
-  final String id;
-  final List<Chapter> chapters;
+class Chapter {
+  final String chapNumber;
+  final List images;
 
-  ChapterModel({
-    required this.id,
-    required this.chapters,
+  Chapter({
+    required this.chapNumber,
+    required this.images,
   });
 
-  factory ChapterModel.fromJson(Map<String, dynamic> json) {
-    return ChapterModel(
-      id: json['id'],
-      chapters: json['chapters'],
+  factory Chapter.fromJson(Map<String, dynamic> json) {
+    return Chapter(
+      chapNumber: json['chapNumber'],
+      images: json['images'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
-      'chapters': chapters,
+      'chapNumber': chapNumber,
+      'images': images,
     };
   }
 }
 
-class Chapter {
-  final String chapNumber;
-  final String images;
-  final int imageCount;
+class ListChapter {
+  final String id;
+  final List<Chapter> chapters;
 
-  Chapter({
-    required this.chapNumber,
-    required this.images,
-    required this.imageCount,
+  ListChapter({
+    required this.id,
+    required this.chapters,
   });
+
+  factory ListChapter.fromJson(Map<String, dynamic> json) {
+    List<Chapter> chapters = [];
+    for (var element in json['chapters']) {
+      chapters.add(Chapter.fromJson(element));
+    }
+    return ListChapter(id: json['id'], chapters: chapters);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'chapters': chapters.map((e) => e.toJson()).toList(),
+    };
+  }
 }

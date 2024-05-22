@@ -1,28 +1,28 @@
-class ComicModel {
+class Comic {
   final String id;
   final String? title;
+  final String? img;
   final String? author;
   final List<String>? category;
   final String? description;
-  final String? image;
 
-  ComicModel({
+  Comic({
     required this.id,
     this.title,
+    this.img,
     this.author,
     this.category,
     this.description,
-    this.image,
   });
 
-  factory ComicModel.fromJson(Map<String, dynamic> json) {
-    return ComicModel(
+  factory Comic.fromJson(Map<String, dynamic> json) {
+    return Comic(
       id: json['id'],
       title: json['title'],
       author: json['author'],
-      category: json['category'],
+      category: List<String>.from(json['category']),
       description: json['description'],
-      image: json['image'],
+      img: json['img'],
     );
   }
 
@@ -33,7 +33,29 @@ class ComicModel {
       'author': author,
       'category': category,
       'description': description,
-      'image': image,
+      'img': img,
     };
+  }
+}
+
+class ListComic {
+  final List<Comic> listComic;
+
+  ListComic({required this.listComic});
+
+  factory ListComic.fromJson(List<dynamic> json) {
+    List<Comic> listComic = [];
+    for (var element in json) {
+      listComic.add(Comic.fromJson(element));
+    }
+    return ListComic(listComic: listComic);
+  }
+
+  List<Map<String, dynamic>> toJson() {
+    List<Map<String, dynamic>> listComic = [];
+    for (var element in this.listComic) {
+      listComic.add(element.toJson());
+    }
+    return listComic;
   }
 }
