@@ -14,7 +14,6 @@ class BannerController extends GetxController {
   void fetchBanner() async {
     isLoading(true);
     final bannersData = await BannerService.fetchBanners();
-    print(bannersData);
     // ignore: unnecessary_null_comparison
     if (bannersData != null) {
       banners(bannersData);

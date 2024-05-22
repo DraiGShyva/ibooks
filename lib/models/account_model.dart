@@ -37,7 +37,7 @@ class ListAccount {
 
   List<Map<String, dynamic>> toJson() {
     List<Map<String, dynamic>> listAccount = [];
-    for (var element in this.data) {
+    for (var element in data) {
       listAccount.add(element.toJson());
     }
     return listAccount;
