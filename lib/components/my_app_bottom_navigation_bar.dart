@@ -23,7 +23,7 @@ class _MyHomePageState extends State<MyAppBottomNavigationBar> {
   final NotchBottomBarController _controller =
       NotchBottomBarController(index: 0);
 
-  int maxCount = 6;
+  final int _maxCount = 6;
 
   @override
   void dispose() {
@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyAppBottomNavigationBar> {
             (index) => widget.bottomBarPages[index]),
       ),
       extendBody: true,
-      bottomNavigationBar: (widget.bottomBarPages.length <= maxCount)
+      bottomNavigationBar: (widget.bottomBarPages.length <= _maxCount)
           ? AnimatedNotchBottomBar(
               notchBottomBarController: _controller,
               bottomBarItems: widget.bottomBarItems,

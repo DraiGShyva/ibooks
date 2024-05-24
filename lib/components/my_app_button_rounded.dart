@@ -13,30 +13,37 @@ class MyAppRoundedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      child: Container(
-        decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 231, 250, 255),
-          border: Border.all(
-            color: const Color.fromARGB(41, 93, 93, 255),
-            width: 2,
-          ),
+    return Material(
+      color: Colors.transparent,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: InkWell(
+          onTap: onPressed,
           borderRadius: BorderRadius.circular(100),
-          boxShadow: const [
-            BoxShadow(
-              blurRadius: 2,
-              color: Color.fromARGB(93, 0, 20, 150),
+          child: Ink(
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 231, 250, 255),
+              border: Border.all(
+                color: const Color.fromARGB(41, 93, 93, 255),
+                width: 2,
+              ),
+              borderRadius: BorderRadius.circular(100),
+              boxShadow: const [
+                BoxShadow(
+                  blurRadius: 2,
+                  color: Color.fromARGB(93, 0, 20, 150),
+                ),
+              ],
             ),
-          ],
-        ),
-        padding: const EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 20,
-        ),
-        child: MyAppText(
-          text: name,
-          style: MyAppTextStyles.mediumBlue,
+            padding: const EdgeInsets.symmetric(
+              vertical: 10,
+              horizontal: 20,
+            ),
+            child: MyAppText(
+              text: name,
+              style: MyAppTextStyles.mediumBlue,
+            ),
+          ),
         ),
       ),
     );

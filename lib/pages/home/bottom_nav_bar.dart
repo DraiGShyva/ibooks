@@ -12,19 +12,19 @@ class BottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: MyAppBottomNavigationBar(
-        bottomBarPages: bottomBarPages,
-        bottomBarItems: bottomBarItems,
+        bottomBarPages: _bottomBarPages,
+        bottomBarItems: _bottomBarItems,
       ),
     );
   }
 
-  final List<Widget> bottomBarPages = [
+  final List<Widget> _bottomBarPages = [
     const HomePage(),
     const FavouritePage(),
     const AccountPage(),
   ];
 
-  final List<BottomBarItem> bottomBarItems = [
+  final List<BottomBarItem> _bottomBarItems = [
     const BottomBarItem(
       itemLabel: 'Home',
       inActiveItem: Icon(

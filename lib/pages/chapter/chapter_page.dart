@@ -13,7 +13,7 @@ class ChapterPage extends StatefulWidget {
   State<ChapterPage> createState() => _ChapterPageState();
 }
 
-double appBarOpacity = 1.0;
+double _appBarOpacity = 1.0;
 
 class _ChapterPageState extends State<ChapterPage> {
   @override
@@ -29,7 +29,7 @@ class _ChapterPageState extends State<ChapterPage> {
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: AnimatedOpacity(
           duration: const Duration(milliseconds: 300),
-          opacity: appBarOpacity,
+          opacity: _appBarOpacity,
           child: AppBar(
             title: Text('Chapter ${chapter.chapNumber}'),
             backgroundColor: Colors.transparent,
@@ -42,15 +42,15 @@ class _ChapterPageState extends State<ChapterPage> {
         loadMoreItem: 20,
         itemsList: List.generate(
             chapter.images.length, (index) => chapter.images[index]),
-        itemWidget: (item) => MyAppImage(imageUrl: item),
+        itemWidget: (item) => MyAppImage(item),
         onScrollDown: () {
           setState(() {
-            appBarOpacity = 0.0;
+            _appBarOpacity = 0.0;
           });
         },
         onScrollUp: () {
           setState(() {
-            appBarOpacity = 1.0;
+            _appBarOpacity = 1.0;
           });
         },
       ),

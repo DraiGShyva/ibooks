@@ -13,50 +13,50 @@ import 'package:myapp/utils/validator.dart';
 class RegisterPage extends StatelessWidget {
   RegisterPage({super.key});
 
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController rePasswordController = TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey();
-  final FocusNode confirmPasswordFocusNode = FocusNode();
-
-  registerPressed(
-      {required GlobalKey<FormState> formKey,
-      required String username,
-      required String password,
-      required BuildContext context}) {
-    FocusScope.of(context).unfocus();
-    if (formKey.currentState!.validate()) {
-      final accountController = Get.put(AccountController());
-      accountController.addAccount(
-        newAccount: Account(
-          username: username,
-          password: password,
-          favourite: [],
-        ),
-        onComplete: (message, isSuccessful) {
-          MyAppNotification.showAlertDialog(context: context);
-          Future.delayed(const Duration(seconds: 1), () {
-            if (isSuccessful) {
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                LOGIN,
-                (route) => false,
-                arguments: {'username': username},
-              );
-            } else {
-              Navigator.pop(context);
-            }
-            MyAppNotification.showToast(content: message, context: context);
-          });
-        },
-      );
-    }
-  }
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _rePasswordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  final FocusNode _confirmPasswordFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
+    registerPressed(
+        {required GlobalKey<FormState> formKey,
+        required String username,
+        required String password,
+        required BuildContext context}) {
+      FocusScope.of(context).unfocus();
+      if (formKey.currentState!.validate()) {
+        final accountController = Get.put(AccountController());
+        accountController.addAccount(
+          newAccount: Account(
+            username: username,
+            password: password,
+            favourite: [],
+          ),
+          onComplete: (message, isSuccessful) {
+            MyAppNotification.showAlertDialog(context: context);
+            Future.delayed(const Duration(seconds: 1), () {
+              if (isSuccessful) {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  LOGIN,
+                  (route) => false,
+                  arguments: {'username': username},
+                );
+              } else {
+                Navigator.pop(context);
+              }
+              MyAppNotification.showToast(content: message);
+            });
+          },
+        );
+      }
+    }
+
     Widget form = Form(
-      key: formKey,
+      key: _formKey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -71,7 +71,7 @@ class RegisterPage extends StatelessWidget {
           MyAppTextField(
             labelText: 'Username*',
             hintText: 'Enter your username.',
-            textEC: usernameController,
+            textEC: _usernameController,
             validator: Validator.requiredValidator.call,
             action: TextInputAction.next,
           ),
@@ -79,32 +79,32 @@ class RegisterPage extends StatelessWidget {
           MyAppTextField(
             labelText: 'Password*',
             hintText: 'Enter your password.',
-            textEC: passwordController,
+            textEC: _passwordController,
             isPassword: true,
             validator: Validator.passwordValidator.call,
             onFieldSubmitted: (value) {
-              FocusScope.of(context).requestFocus(confirmPasswordFocusNode);
+              FocusScope.of(context).requestFocus(_confirmPasswordFocusNode);
             },
           ),
           const SizedBox(height: 10),
           MyAppTextField(
             labelText: 'Confirm Password*',
             hintText: 'Enter your password again.',
-            textEC: rePasswordController,
+            textEC: _rePasswordController,
             isPassword: true,
             validator:
-                Validator.confirmPasswordValidator(passwordController.text)
+                Validator.confirmPasswordValidator(_passwordController.text)
                     .call,
-            focusNode: confirmPasswordFocusNode,
+            focusNode: _confirmPasswordFocusNode,
             onFieldSubmitted: (value) => FocusScope.of(context).unfocus(),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 10),
           MyAppRoundedButton(
             name: 'Register',
             onPressed: () => registerPressed(
-                formKey: formKey,
-                username: usernameController.text,
-                password: passwordController.text,
+                formKey: _formKey,
+                username: _usernameController.text,
+                password: _passwordController.text,
                 context: context),
           ),
           Row(
@@ -131,12 +131,9 @@ class RegisterPage extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(BG_LOG_IMG),
-                  fit: BoxFit.cover,
-                ),
-              ),
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(BG_LOG_IMG), fit: BoxFit.cover)),
               child: Center(
                 child: SingleChildScrollView(
                   child: Padding(

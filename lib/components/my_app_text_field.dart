@@ -29,7 +29,7 @@ class MyAppTextField extends StatefulWidget {
 }
 
 class _MyAppTextFieldState extends State<MyAppTextField> {
-  bool hiddenButton = true;
+  bool _hiddenButton = true;
 
   @override
   Widget build(BuildContext context) {
@@ -45,17 +45,17 @@ class _MyAppTextFieldState extends State<MyAppTextField> {
             ? IconButton(
                 onPressed: () {
                   setState(() {
-                    hiddenButton = !hiddenButton;
+                    _hiddenButton = !_hiddenButton;
                   });
                 },
                 icon: Icon(
-                  hiddenButton ? Icons.visibility_off : Icons.visibility,
+                  _hiddenButton ? Icons.visibility_off : Icons.visibility,
                 ),
               )
             : null,
       ),
       controller: widget.textEC,
-      obscureText: widget.isPassword ? hiddenButton : false,
+      obscureText: widget.isPassword ? _hiddenButton : false,
       validator: widget.validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       textInputAction: widget.action,

@@ -12,20 +12,19 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  final appController = Get.put(AppController());
+  final _appController = Get.put(AppController());
 
   @override
   void initState() {
     super.initState();
-    appController.onInit();
     Future.delayed(const Duration(seconds: 4), () {
-      if (appController.isFirstRun.value) {
+      if (_appController.isFirstRun.value) {
         Navigator.pushNamedAndRemoveUntil(
           context,
           ONBOARDING,
           (route) => false,
         );
-      } else if (appController.authenKey.value == '') {
+      } else if (_appController.authenKey.value == '') {
         Navigator.pushNamedAndRemoveUntil(
           context,
           LOGIN,
@@ -48,12 +47,9 @@ class _SplashPageState extends State<SplashPage> {
       body: Center(
         child: Container(
           width: MediaQuery.of(context).size.width * 0.8,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(SPLASH_IMG),
-              fit: BoxFit.contain,
-            ),
-          ),
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(SPLASH_IMG), fit: BoxFit.contain)),
         ),
       ),
     );

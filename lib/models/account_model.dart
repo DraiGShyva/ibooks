@@ -1,24 +1,28 @@
 class Account {
   final String username;
-  final String password;
+  String password;
   final List<String> favourite;
+  String avatar;
 
   Account({
     required this.username,
     required this.password,
     required this.favourite,
+    this.avatar = '',
   });
 
   factory Account.fromJson(Map<String, dynamic> json) => Account(
         username: json['username'],
         password: json['password'],
         favourite: List<String>.from(json['favourite']),
+        avatar: json['avatar'],
       );
 
   Map<String, dynamic> toJson() => {
         'username': username,
         'password': password,
         'favourite': favourite,
+        'avatar': avatar,
       };
 }
 

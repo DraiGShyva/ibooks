@@ -1,7 +1,9 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:get/get.dart';
+import 'package:myapp/controller/app_controller.dart';
 import 'package:myapp/models/account_model.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountController extends GetxController {
@@ -68,12 +70,39 @@ class AccountController extends GetxController {
     );
   }
 
-  List<String> getFavouriteList(String username) {
+  Future<void> changePassword(
+      {required String username,
+      required String newPassword,
+      Function? onComplete}) async {
+    String message = 'Account does not exist';
+    bool isSuccessful = false;
+    final account = getAccountByUsername(username);
+    if (account != null) {
+      if (account.password == newPassword) {
+        message =
+            'The password is unsuccessful due to coinciding with the old password';
+      } else {
+        try {
+          account.password = newPassword;
+          await AccountService.saveAccounts(accounts.value);
+          message = 'Successful password change';
+          isSuccessful = true;
+        } catch (e) {
+          message = 'Failed to change password';
+        }
+      }
+    }
+    onComplete!(message, isSuccessful);
+  }
+
+  List<String> getFavouriteList() {
+    String username = Get.put(AppController()).authenKey.value;
     final account = getAccountByUsername(username);
     return account?.favourite ?? [];
   }
 
-  void addFavourite(String username, String comicId) async {
+  void addFavourite(String comicId) async {
+    String username = Get.put(AppController()).authenKey.value;
     accounts.update((val) {
       final account = val?.data.firstWhereOrNull(
         (account) => account.username == username,
@@ -83,7 +112,8 @@ class AccountController extends GetxController {
     AccountService.saveAccounts(accounts.value);
   }
 
-  void removeFavourite(String username, String comicId) async {
+  void removeFavourite(String comicId) async {
+    String username = Get.put(AppController()).authenKey.value;
     accounts.update((val) {
       final account = val?.data.firstWhereOrNull(
         (account) => account.username == username,
@@ -91,6 +121,27 @@ class AccountController extends GetxController {
       account?.favourite.remove(comicId);
     });
     AccountService.saveAccounts(accounts.value);
+  }
+
+  String getAvatar() {
+    String username = Get.put(AppController()).authenKey.value;
+    final account = getAccountByUsername(username);
+    return account?.avatar ?? '';
+  }
+
+  Future<String> setAvatar(File avatar) async {
+    String username = Get.put(AppController()).authenKey.value;
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      final path = '${directory.path}/${DateTime.now()}.png';
+      await avatar.copy(path);
+      final account = getAccountByUsername(username);
+      account?.avatar = path;
+      AccountService.saveAccounts(accounts.value);
+      return 'Successful avatar update';
+    } catch (e) {
+      return 'Error: $e';
+    }
   }
 }
 

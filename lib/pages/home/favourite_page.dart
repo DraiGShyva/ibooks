@@ -19,9 +19,10 @@ class _FavouritePageState extends State<FavouritePage> {
     final accountController = Get.put(AccountController());
     final authenKey = Get.put(AppController()).authenKey.value;
     final comics = Get.put(ComicController()).comics.value.listComic;
+
     List listComic = comics
-        .where((comic) =>
-            accountController.getFavouriteList(authenKey).contains(comic.id))
+        .where(
+            (comic) => accountController.getFavouriteList().contains(comic.id))
         .toList();
 
     if (authenKey.isEmpty) {

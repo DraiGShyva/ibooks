@@ -20,8 +20,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final banners = Get.put(BannerController()).banners.value.listBanner;
-  final comics = Get.put(ComicController()).comics.value.listComic;
+  final _banners = Get.put(BannerController()).banners.value.listBanner;
+  final _comics = Get.put(ComicController()).comics.value.listComic;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
         comic: comic,
         setState: () => setState(() {}),
       ),
-      itemsList: comics,
+      itemsList: _comics,
     );
   }
 
@@ -46,14 +46,14 @@ class _HomePageState extends State<HomePage> {
   Widget _pageView() => MyAppAutoPageView(
         height: bannerHeith,
         pages: List.generate(
-          banners.length,
+          _banners.length,
           (index) => InkWell(
             onTap: () {
               Navigator.pushNamed(context, LIST_CHAPTER,
-                  arguments: {'id': banners[index].id});
+                  arguments: {'id': _banners[index].id});
             },
             child: MyAppImage(
-              imageUrl: banners[index].image,
+              _banners[index].image,
               width: MediaQuery.of(context).size.width,
             ),
           ),

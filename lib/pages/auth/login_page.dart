@@ -10,30 +10,18 @@ import 'package:myapp/utils/local_image.dart';
 import 'package:myapp/utils/route.dart';
 import 'package:myapp/utils/validator.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   const LoginPage({super.key, this.username});
 
   final String? username;
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey();
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.username != null) {
-      usernameController.text = widget.username!;
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final TextEditingController usernameController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    final GlobalKey<FormState> formKey = GlobalKey();
+    if (username != null) usernameController.text = username!;
+
     loginPressed() {
       if (formKey.currentState!.validate()) {
         final accountController = Get.put(AccountController());
@@ -47,16 +35,14 @@ class _LoginPageState extends State<LoginPage> {
               if (check) {
                 appController.authenKey.value = usernameController.text;
                 appController.saveAuthenKey();
-                MyAppNotification.showToast(
-                    content: 'Login successful!', context: context);
+                MyAppNotification.showToast(content: 'Login successful!');
                 Navigator.pushNamed(context, LOAD, arguments: {
                   'nextPage': HOME,
                   'removeUntil': true,
                 });
               } else {
                 MyAppNotification.showToast(
-                    content: 'Username or password incorrectly!',
-                    context: context);
+                    content: 'Username or password incorrectly!');
                 Navigator.pop(context);
               }
             });
@@ -93,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
             validator: Validator.passwordValidator.call,
             onFieldSubmitted: (value) => loginPressed(),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 10),
           MyAppRoundedButton(
             name: 'Login',
             onPressed: () => loginPressed(),
@@ -121,12 +107,9 @@ class _LoginPageState extends State<LoginPage> {
         child: Stack(
           children: [
             Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(BG_LOG_IMG),
-                  fit: BoxFit.cover,
-                ),
-              ),
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(BG_LOG_IMG), fit: BoxFit.cover)),
               child: Center(
                 child: SingleChildScrollView(
                   child: Padding(

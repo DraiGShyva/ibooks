@@ -1,5 +1,4 @@
-// ignore_for_file: constant_identifier_names, non_constant_identifier_names
-
+// ignore_for_file: constant_identifier_names
 const String LOAD = '/load';
 const String LOGIN = '/login';
 const String REGISTER = '/register';

@@ -24,11 +24,7 @@ void main() {
   ]);
 
   SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarBrightness: Brightness.dark,
-      statusBarIconBrightness: Brightness.light,
-    ),
+    const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
   );
 
   runApp(const MyApp());
@@ -39,6 +35,7 @@ class MyApp extends StatelessWidget {
 
   static onGenerateRoute(settings) => MaterialPageRoute(
         builder: (context) {
+          Get.put(AccountController()).onInit();
           switch (settings.name) {
             case LOAD:
               if (settings.arguments != null) {
@@ -60,7 +57,6 @@ class MyApp extends StatelessWidget {
             case HOME:
               Get.put(BannerController()).onInit();
               Get.put(ComicController()).onInit();
-              Get.put(AccountController()).onInit();
               return const LoadPage(nextPage: BOTTOM_NAV_BAR);
 
             case BOTTOM_NAV_BAR:

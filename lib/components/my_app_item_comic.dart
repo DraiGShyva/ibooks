@@ -44,9 +44,7 @@ class MyAppItemComic extends StatelessWidget {
           });
         },
         onLongPress: () {
-          String data = accountController
-                  .getFavouriteList(appController.authenKey.value)
-                  .contains(comic.id)
+          String data = accountController.getFavouriteList().contains(comic.id)
               ? 'Remove from favorite'
               : 'Add to favorite';
           alertDialog(context, appController, accountController, data);
@@ -60,7 +58,7 @@ class MyAppItemComic extends StatelessWidget {
       AccountController accountController, String data) {
     MyAppNotification.showAlertDialog(
       context: context,
-      title: 'Thông tin truyện',
+      title: 'Comic Information',
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,28 +104,20 @@ class MyAppItemComic extends StatelessWidget {
           onPressed: () {
             if (appController.authenKey.value.isEmpty) {
               MyAppNotification.showToast(
-                content: 'You need to login to add your favorite comic.',
-                context: context,
-              );
+                  content: 'You need to login to add your favorite comic.');
             } else if (accountController
-                .getFavouriteList(appController.authenKey.value)
+                .getFavouriteList()
                 .contains(comic.id)) {
-              accountController.removeFavourite(
-                  appController.authenKey.value, comic.id);
+              accountController.removeFavourite(comic.id);
               MyAppNotification.showToast(
-                content: 'Removed from your favorite list.',
-                context: context,
-              );
+                  content: 'Removed from your favorite list.');
               data = 'Remove from favorite';
               setState != null ? setState!() : null;
               Navigator.pop(context);
             } else {
-              accountController.addFavourite(
-                  appController.authenKey.value, comic.id);
+              accountController.addFavourite(comic.id);
               MyAppNotification.showToast(
-                content: 'Added to your favorite list.',
-                context: context,
-              );
+                  content: 'Added to your favorite list.');
               data = 'Add to favorrite';
               setState != null ? setState!() : null;
               Navigator.pop(context);
@@ -139,7 +129,7 @@ class MyAppItemComic extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: const Text('Đóng'),
+          child: const Text('Close'),
         ),
       ],
     );
@@ -155,7 +145,7 @@ class MyAppItemComic extends StatelessWidget {
             bottomLeft: Radius.circular(20),
           ),
           child: MyAppImage(
-            imageUrl: '${comic.img}',
+            '${comic.img}',
             height: heightImage,
             width: widthImage,
           ),
