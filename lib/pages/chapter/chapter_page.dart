@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:myapp/components/my_app_image.dart';
 import 'package:myapp/components/my_app_list_view.dart';
 import 'package:myapp/controller/chapter_controller.dart';
@@ -18,10 +19,8 @@ double _appBarOpacity = 1.0;
 class _ChapterPageState extends State<ChapterPage> {
   @override
   Widget build(BuildContext context) {
-    var chapter = ChapterController.chapters
-        .firstWhere((element) => element.id == widget.id)
-        .chapters
-        .firstWhere((element) => element.chapNumber == widget.chapNumber);
+    final chapterController = Get.put(ChapterController());
+    final chapter = chapterController.getChapter(widget.id, widget.chapNumber);
 
     return Scaffold(
       extendBodyBehindAppBar: true,

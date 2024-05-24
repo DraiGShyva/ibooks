@@ -6,7 +6,9 @@ import 'package:myapp/components/my_app_button_diamond.dart';
 import 'package:myapp/components/my_app_image.dart';
 import 'package:myapp/components/my_app_item_comic.dart';
 import 'package:myapp/components/my_app_list_view.dart';
+import 'package:myapp/controller/app_controller.dart';
 import 'package:myapp/controller/banner_controller.dart';
+import 'package:myapp/controller/chapter_controller.dart';
 import 'package:myapp/controller/comic_controller.dart';
 import 'package:myapp/utils/route.dart';
 
@@ -25,6 +27,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(ChapterController()).onInit();
     return MyAppListView(
       startWidget: Stack(
         children: [
@@ -35,6 +38,7 @@ class _HomePageState extends State<HomePage> {
       itemWidget: (comic) => MyAppItemComic(
         context: context,
         comic: comic,
+        authenKey: Get.put(AppController()).authenKey.value,
         setState: () => setState(() {}),
       ),
       itemsList: _comics,

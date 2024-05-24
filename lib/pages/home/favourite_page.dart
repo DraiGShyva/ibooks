@@ -42,6 +42,7 @@ class _FavouritePageState extends State<FavouritePage> {
       itemWidget: (comic) => MyAppItemComic(
         context: context,
         comic: comic,
+        authenKey: authenKey,
         setState: () => setState(() {}),
       ),
     );

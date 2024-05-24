@@ -46,3 +46,27 @@ class ListChapter {
     };
   }
 }
+
+class ListComicChapter {
+  final List<ListChapter> listComicChapter;
+
+  ListComicChapter({
+    required this.listComicChapter,
+  });
+
+  factory ListComicChapter.fromJson(List<dynamic> json) {
+    List<ListChapter> listComicChapter = [];
+    for (var element in json) {
+      listComicChapter.add(ListChapter.fromJson(element));
+    }
+    return ListComicChapter(listComicChapter: listComicChapter);
+  }
+
+  List<dynamic> toJson() {
+    List<dynamic> listComicChapter = [];
+    for (var element in this.listComicChapter) {
+      listComicChapter.add(element.toJson());
+    }
+    return listComicChapter;
+  }
+}

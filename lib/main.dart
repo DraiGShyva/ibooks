@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
                   username: settings.arguments['username'],
                 );
               }
-              return const LoginPage();
+              return LoginPage();
 
             case REGISTER:
               return RegisterPage();

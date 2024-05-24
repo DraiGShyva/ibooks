@@ -11,29 +11,30 @@ import 'package:myapp/utils/route.dart';
 import 'package:myapp/utils/validator.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key, this.username});
+  LoginPage({super.key, this.username});
 
   final String? username;
 
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController usernameController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
-    final GlobalKey<FormState> formKey = GlobalKey();
-    if (username != null) usernameController.text = username!;
+    if (username != null) _usernameController.text = username!;
 
     loginPressed() {
-      if (formKey.currentState!.validate()) {
+      if (_formKey.currentState!.validate()) {
         final accountController = Get.put(AccountController());
         final appController = Get.put(AppController());
         accountController.isAccountValid(
-          username: usernameController.text,
-          password: passwordController.text,
+          username: _usernameController.text,
+          password: _passwordController.text,
           onComplete: (check) {
             MyAppNotification.showAlertDialog(context: context);
             Future.delayed(const Duration(seconds: 1), () {
               if (check) {
-                appController.authenKey.value = usernameController.text;
+                appController.authenKey.value = _usernameController.text;
                 appController.saveAuthenKey();
                 MyAppNotification.showToast(content: 'Login successful!');
                 Navigator.pushNamed(context, LOAD, arguments: {
@@ -52,7 +53,7 @@ class LoginPage extends StatelessWidget {
     }
 
     Widget form = Form(
-      key: formKey,
+      key: _formKey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -66,7 +67,7 @@ class LoginPage extends StatelessWidget {
           MyAppTextField(
             labelText: 'Username*',
             hintText: 'Enter your username.',
-            textEC: usernameController,
+            textEC: _usernameController,
             validator: Validator.requiredValidator.call,
             action: TextInputAction.next,
           ),
@@ -74,7 +75,7 @@ class LoginPage extends StatelessWidget {
           MyAppTextField(
             labelText: 'Password*',
             hintText: 'Enter your password.',
-            textEC: passwordController,
+            textEC: _passwordController,
             isPassword: true,
             validator: Validator.passwordValidator.call,
             onFieldSubmitted: (value) => loginPressed(),

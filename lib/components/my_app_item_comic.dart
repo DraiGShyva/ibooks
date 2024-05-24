@@ -4,7 +4,6 @@ import 'package:myapp/components/my_app_image.dart';
 import 'package:myapp/components/my_app_notification.dart';
 import 'package:myapp/components/my_app_text.dart';
 import 'package:myapp/controller/account_controller.dart';
-import 'package:myapp/controller/app_controller.dart';
 import 'package:myapp/models/comic_model.dart';
 import 'package:myapp/utils/route.dart';
 
@@ -16,6 +15,7 @@ class MyAppItemComic extends StatelessWidget {
     this.heightImage = 160,
     this.widthImage = 120,
     this.setState,
+    required this.authenKey,
   });
 
   final BuildContext context;
@@ -23,11 +23,11 @@ class MyAppItemComic extends StatelessWidget {
   final double heightImage;
   final double widthImage;
   final Function? setState;
+  final String authenKey;
 
   @override
   Widget build(BuildContext context) {
     final accountController = Get.put(AccountController());
-    final appController = Get.put(AppController());
 
     return Padding(
       padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
@@ -47,15 +47,15 @@ class MyAppItemComic extends StatelessWidget {
           String data = accountController.getFavouriteList().contains(comic.id)
               ? 'Remove from favorite'
               : 'Add to favorite';
-          alertDialog(context, appController, accountController, data);
+          alertDialog(context, accountController, data);
         },
         child: content(),
       ),
     );
   }
 
-  void alertDialog(BuildContext context, AppController appController,
-      AccountController accountController, String data) {
+  void alertDialog(
+      BuildContext context, AccountController accountController, String data) {
     MyAppNotification.showAlertDialog(
       context: context,
       title: 'Comic Information',
@@ -102,7 +102,7 @@ class MyAppItemComic extends StatelessWidget {
       listButton: [
         TextButton(
           onPressed: () {
-            if (appController.authenKey.value.isEmpty) {
+            if (authenKey.isEmpty) {
               MyAppNotification.showToast(
                   content: 'You need to login to add your favorite comic.');
             } else if (accountController
