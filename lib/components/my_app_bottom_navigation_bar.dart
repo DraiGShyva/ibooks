@@ -2,16 +2,19 @@ import 'dart:developer';
 
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/utils/colors.dart';
 
 class MyAppBottomNavigationBar extends StatefulWidget {
   const MyAppBottomNavigationBar({
     super.key,
     this.bottomBarPages = const [],
     this.bottomBarItems = const [],
+    this.kBottomBarColor = MyAppColors.white,
   });
 
   final List<Widget> bottomBarPages;
   final List<BottomBarItem> bottomBarItems;
+  final Color kBottomBarColor;
 
   @override
   State<MyAppBottomNavigationBar> createState() => _MyHomePageState();
@@ -45,6 +48,8 @@ class _MyHomePageState extends State<MyAppBottomNavigationBar> {
           ? AnimatedNotchBottomBar(
               notchBottomBarController: _controller,
               bottomBarItems: widget.bottomBarItems,
+              color: widget.kBottomBarColor,
+              notchColor: widget.kBottomBarColor,
               onTap: (index) {
                 log('current selected index $index');
                 _pageController.jumpToPage(index);

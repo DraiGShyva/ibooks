@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/components/my_app_text.dart';
+import 'package:myapp/utils/colors.dart';
 
 class MyAppSlideButton extends StatefulWidget {
   const MyAppSlideButton({
     super.key,
     required this.onSlideComplete,
-    this.color = Colors.white,
+    this.color = MyAppColors.white,
     this.text,
     this.reverse = false,
     this.width = 200.0,
@@ -90,10 +91,10 @@ class _MyAppSlideButtonState extends State<MyAppSlideButton>
           decoration: BoxDecoration(
             color: widget.color,
             borderRadius: borderRadius,
-            border: Border.all(color: Colors.blue),
+            border: Border.all(color: MyAppColors.blueAccent),
             boxShadow: const [
               BoxShadow(
-                color: Colors.blue,
+                color: MyAppColors.blueAccent,
                 blurRadius: 5,
               ),
             ],
@@ -105,7 +106,7 @@ class _MyAppSlideButtonState extends State<MyAppSlideButton>
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Center(
                   child: MyAppText(
-                    text: widget.text ?? '',
+                    widget.text ?? '',
                     style: MyAppTextStyles.smallBlue,
                     maxLines: 2,
                   ),

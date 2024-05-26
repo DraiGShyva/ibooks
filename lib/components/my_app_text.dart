@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/utils/colors.dart';
 
 class MyAppText extends StatelessWidget {
-  const MyAppText({
+  const MyAppText(
+    this.text, {
     super.key,
-    required this.text,
     this.style = MyAppTextStyles.medium,
     this.maxLines = 1,
     this.overflow = false,
@@ -49,13 +50,13 @@ class MyAppTextStyles {
   static const TextStyle small = TextStyle(fontSize: _smallSize);
 
   static const TextStyle largeGrey =
-      TextStyle(fontSize: _largeSize, color: Colors.blueGrey);
+      TextStyle(fontSize: _largeSize, color: MyAppColors.grey);
 
   static const TextStyle mediumGrey =
-      TextStyle(fontSize: _mediumSize, color: Colors.blueGrey);
+      TextStyle(fontSize: _mediumSize, color: MyAppColors.grey);
 
   static const TextStyle smallGrey =
-      TextStyle(fontSize: _smallSize, color: Colors.blueGrey);
+      TextStyle(fontSize: _smallSize, color: MyAppColors.grey);
 
   static const TextStyle largeBlue =
       TextStyle(fontSize: _largeSize, color: Color.fromARGB(255, 0, 152, 198));

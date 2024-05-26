@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/utils/colors.dart';
 
 class MyAppTextField extends StatefulWidget {
   const MyAppTextField({
@@ -37,7 +38,7 @@ class _MyAppTextFieldState extends State<MyAppTextField> {
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5),
-          borderSide: const BorderSide(color: Colors.black, width: 1),
+          borderSide: const BorderSide(color: MyAppColors.black, width: 1),
         ),
         labelText: widget.labelText,
         hintText: widget.hintText,

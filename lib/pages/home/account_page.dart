@@ -8,6 +8,7 @@ import 'package:myapp/components/my_app_text.dart';
 import 'package:myapp/components/my_app_text_field.dart';
 import 'package:myapp/controller/account_controller.dart';
 import 'package:myapp/controller/app_controller.dart';
+import 'package:myapp/utils/colors.dart';
 import 'package:myapp/utils/local_image.dart';
 import 'package:myapp/utils/route.dart';
 import 'package:image_picker/image_picker.dart';
@@ -23,104 +24,151 @@ class AccountPage extends StatefulWidget {
 class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
-    AccountController account = Get.put(AccountController());
-    String avatar = account.getAvatar();
+    Get.put(AppController()).isDarkMode.listen((isDarkMode) {
+      if (mounted) setState(() {});
+    });
 
     final List<Map<String, dynamic>> listButton = [
       {
-        'name': 'Settings',
-        'onTap': () {},
-      },
-      {
         'name': 'Change password',
-        'onTap': () => changePassword(context, account),
+        'onTap': () => _changePassword(context),
       },
       {
         'name': 'Log out',
-        'onTap': () => logout(context),
+        'onTap': () => _logout(context),
       },
       {
         'name': 'About',
-        'onTap': () {},
+        'onTap': () => _about(context),
       },
     ];
 
+    Future<void> pickImage() async {
+      File imageFile;
+      final pickedFile =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
+      imageFile = File(pickedFile!.path);
+      String message = await Get.put(AccountController()).setAvatar(imageFile);
+      MyAppNotification.showToast(content: message);
+      setState(() {});
+    }
+
     return Column(
       children: [
+        const SizedBox(height: 100.0),
+        _avatar(pickImage),
         const SizedBox(height: 50.0),
-        _avatar(account, avatar),
-        const SizedBox(height: 20.0),
-        const Divider(height: 0),
-        Ink(
-          color: Colors.cyan,
-          child: Column(
-            children: List.generate(
-              listButton.length,
-              (index) => Column(
-                children: [
-                  InkWell(
-                    onTap: listButton[index]['onTap'],
-                    child: SizedBox(
-                      height: 50.0,
-                      width: MediaQuery.of(context).size.width,
-                      child: Center(
-                        child: MyAppText(
-                          text: listButton[index]['name'],
-                          style: MyAppTextStyles.medium
-                              .copyWith(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const Divider(height: 0),
-                ],
-              ),
-            ),
-          ),
-        )
+        _buttonList(
+          context,
+          listButton: listButton,
+        ),
       ],
     );
   }
 }
 
-Future<void> _pickImage() async {
-  File imageFile;
-  final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-  imageFile = File(pickedFile!.path);
-  String message = await Get.put(AccountController()).setAvatar(imageFile);
-  MyAppNotification.showToast(content: message);
-}
-
-Widget _avatar(account, avatar) => Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: Colors.blue, width: 5.0),
-          ),
+Widget _avatar(pickImage) {
+  AccountController accountController = Get.put(AccountController());
+  String avatar = accountController.getAvatar();
+  return Stack(
+    children: [
+      Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(color: MyAppColors.blueAccent, width: 5.0),
+        ),
+        child: ClipOval(
           child: GestureDetector(
             onTap: () {
-              _pickImage();
-              avatar = account.getAvatar();
+              pickImage();
+              avatar = accountController.getAvatar();
             },
             child: avatar != ''
                 ? MyAppImage.file(avatar, width: 120.0, height: 120.0)
                 : const MyAppImage(AVATAR, width: 120.0, height: 120.0),
           ),
         ),
-        const Positioned(
-            right: 0.0,
-            top: 0.0,
-            child: CircleAvatar(
-                child: Icon(
-              Icons.add_photo_alternate,
-              color: Colors.blueGrey,
-            ))),
-      ],
-    );
+      ),
+      const Positioned(
+        right: 0.0,
+        top: 0.0,
+        child: CircleAvatar(child: Icon(Icons.add_photo_alternate)),
+      ),
+    ],
+  );
+}
 
-changePassword(context, account) {
-  String authenkey = Get.put(AppController()).authenKey.value;
+Widget _buttonList(BuildContext context, {required List listButton}) {
+  AppController appController = Get.put(AppController());
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+    child: Ink(
+      decoration: BoxDecoration(
+        color: Get.put(AppController()).isDarkMode.value
+            ? MyAppColors.blueGrey
+            : MyAppColors.white,
+        borderRadius: BorderRadius.circular(20.0),
+        boxShadow: const [
+          BoxShadow(color: MyAppColors.black, blurRadius: 10.0),
+        ],
+      ),
+      child: Column(children: [
+        Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(width: 10.0),
+              const MyAppText('Dark mode'),
+              const SizedBox(width: 10.0),
+              Obx(() => Switch(
+                    value: appController.isDarkMode.value,
+                    onChanged: (value) {
+                      appController.isDarkMode(value);
+                      appController.saveDarkMode();
+                    },
+                  )),
+            ],
+          ),
+        ),
+        const Divider(height: 0),
+        ...List.generate(
+          listButton.length,
+          (index) {
+            Widget inkWell = InkWell(
+              borderRadius: index == listButton.length - 1
+                  ? const BorderRadius.only(
+                      bottomLeft: Radius.circular(20.0),
+                      bottomRight: Radius.circular(20.0))
+                  : null,
+              onTap: listButton[index]['onTap'],
+              child: SizedBox(
+                height: 50.0,
+                width: MediaQuery.of(context).size.width,
+                child: Center(
+                  child: MyAppText(listButton[index]['name']),
+                ),
+              ),
+            );
+
+            if (index == listButton.length - 1) return inkWell;
+
+            return Column(
+              children: [
+                inkWell,
+                const Divider(height: 0),
+              ],
+            );
+          },
+        ),
+      ]),
+    ),
+  );
+}
+
+_changePassword(BuildContext context) {
+  AccountController accountController = Get.put(AccountController());
+  AppController appController = Get.put(AppController());
   TextEditingController passwordController = TextEditingController();
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -130,7 +178,7 @@ changePassword(context, account) {
       context: context,
       title: 'Change password',
       content: Material(
-        color: Colors.transparent,
+        color: MyAppColors.transparent,
         child: Form(
           key: formKey,
           child: Column(
@@ -166,17 +214,17 @@ changePassword(context, account) {
       ),
       listButton: [
         MyAppRoundedButton(
-          name: ' Cancel ',
+          child: const MyAppText(' Cancel ', style: MyAppTextStyles.mediumBlue),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
         MyAppRoundedButton(
-          name: 'Confirm',
+          child: const MyAppText('Confirm', style: MyAppTextStyles.mediumBlue),
           onPressed: () {
             if (formKey.currentState!.validate()) {
-              account.isAccountValid(
-                username: authenkey,
+              accountController.isAccountValid(
+                username: appController.authenKey.value,
                 password: passwordController.text,
                 onComplete: (value) {
                   if (value) {
@@ -185,8 +233,8 @@ changePassword(context, account) {
                       MyAppNotification.showToast(
                           content: 'Confirm password does not match!');
                     } else {
-                      account.changePassword(
-                          username: authenkey,
+                      accountController.changePassword(
+                          username: appController.authenKey.value,
                           newPassword: newPasswordController.text,
                           onComplete: (message, isSuccessful) {
                             MyAppNotification.showToast(content: message);
@@ -206,23 +254,34 @@ changePassword(context, account) {
       ]);
 }
 
-logout(context) {
+_logout(context) {
   MyAppNotification.showAlertDialog(
     context: context,
     title: 'Confirm the log out',
     content: const Text('Are you sure you want to log out?'),
     listButton: [
       MyAppRoundedButton(
-          name: 'Cancel',
+          child: const MyAppText(' Cancel ', style: MyAppTextStyles.mediumBlue),
           onPressed: () {
             Navigator.pop(context);
           }),
       MyAppRoundedButton(
-          name: 'Confirm',
+          child: const MyAppText('Confirm', style: MyAppTextStyles.mediumBlue),
           onPressed: () {
             Get.put(AppController()).deleteAuthenKey();
             Navigator.pushNamedAndRemoveUntil(context, LOGIN, (route) => false);
           })
     ],
+  );
+}
+
+_about(context) {
+  showAboutDialog(
+    context: context,
+    applicationName: '𝕀𝔹𝕆𝕆𝕂𝕊',
+    applicationVersion: '𝕍𝕖𝕣𝕤𝕚𝕠𝕟 𝟙.𝟘.𝟘',
+    applicationIcon: const ClipOval(child: MyAppImage(LOGO)),
+    applicationLegalese:
+        '©𝟚𝟘𝟚𝟜 𝔻𝕣𝕒𝕚𝔾𝕊𝕙𝕪𝕧𝕒\n\nA̶l̶l̶ ̶r̶i̶g̶h̶t̶s̶ ̶r̶e̶s̶e̶r̶v̶e̶d̶.̶',
   );
 }

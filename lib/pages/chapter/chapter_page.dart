@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myapp/components/my_app_image.dart';
 import 'package:myapp/components/my_app_list_view.dart';
+import 'package:myapp/components/my_app_text.dart';
 import 'package:myapp/controller/chapter_controller.dart';
+import 'package:myapp/utils/colors.dart';
 
 class ChapterPage extends StatefulWidget {
   const ChapterPage({super.key, required this.id, required this.chapNumber});
@@ -30,8 +32,9 @@ class _ChapterPageState extends State<ChapterPage> {
           duration: const Duration(milliseconds: 300),
           opacity: _appBarOpacity,
           child: AppBar(
-            title: Text('Chapter ${chapter.chapNumber}'),
-            backgroundColor: Colors.transparent,
+            title: MyAppText('Chapter ${chapter.chapNumber}'),
+            centerTitle: true,
+            backgroundColor: MyAppColors.transparent,
             elevation: 0,
           ),
         ),

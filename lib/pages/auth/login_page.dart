@@ -6,6 +6,7 @@ import 'package:myapp/components/my_app_text.dart';
 import 'package:myapp/components/my_app_text_field.dart';
 import 'package:myapp/controller/account_controller.dart';
 import 'package:myapp/controller/app_controller.dart';
+import 'package:myapp/utils/colors.dart';
 import 'package:myapp/utils/local_image.dart';
 import 'package:myapp/utils/route.dart';
 import 'package:myapp/utils/validator.dart';
@@ -23,35 +24,6 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     if (username != null) _usernameController.text = username!;
 
-    loginPressed() {
-      if (_formKey.currentState!.validate()) {
-        final accountController = Get.put(AccountController());
-        final appController = Get.put(AppController());
-        accountController.isAccountValid(
-          username: _usernameController.text,
-          password: _passwordController.text,
-          onComplete: (check) {
-            MyAppNotification.showAlertDialog(context: context);
-            Future.delayed(const Duration(seconds: 1), () {
-              if (check) {
-                appController.authenKey.value = _usernameController.text;
-                appController.saveAuthenKey();
-                MyAppNotification.showToast(content: 'Login successful!');
-                Navigator.pushNamed(context, LOAD, arguments: {
-                  'nextPage': HOME,
-                  'removeUntil': true,
-                });
-              } else {
-                MyAppNotification.showToast(
-                    content: 'Username or password incorrectly!');
-                Navigator.pop(context);
-              }
-            });
-          },
-        );
-      }
-    }
-
     Widget form = Form(
       key: _formKey,
       child: Column(
@@ -61,8 +33,8 @@ class LoginPage extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: Image.asset(HELLO_LOG_IMG, width: 150)),
           const SizedBox(height: 10),
-          const MyAppText(
-              text: 'Log in to the application', style: MyAppTextStyles.small),
+          const MyAppText('Log in to the application',
+              style: MyAppTextStyles.small),
           const SizedBox(height: 10),
           MyAppTextField(
             labelText: 'Username*',
@@ -78,23 +50,28 @@ class LoginPage extends StatelessWidget {
             textEC: _passwordController,
             isPassword: true,
             validator: Validator.passwordValidator.call,
-            onFieldSubmitted: (value) => loginPressed(),
+            onFieldSubmitted: (value) => _loginPressed(context,
+                formKey: _formKey,
+                username: _usernameController.text,
+                password: _passwordController.text),
           ),
           const SizedBox(height: 10),
           MyAppRoundedButton(
-            name: 'Login',
-            onPressed: () => loginPressed(),
+            child: const MyAppText('Login', style: MyAppTextStyles.mediumBlue),
+            onPressed: () => _loginPressed(context,
+                formKey: _formKey,
+                username: _usernameController.text,
+                password: _passwordController.text),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const MyAppText(
-                  text: 'Do not have an account?',
+              const MyAppText('Do not have an account?',
                   style: MyAppTextStyles.small),
               TextButton(
                 onPressed: () => Navigator.pushNamed(context, REGISTER),
-                child: const MyAppText(
-                    text: 'Register', style: MyAppTextStyles.small),
+                child:
+                    const MyAppText('Register', style: MyAppTextStyles.small),
               ),
             ],
           ),
@@ -117,13 +94,16 @@ class LoginPage extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
                     child: Container(
                       width: 300,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                        border: Border.fromBorderSide(BorderSide(
+                      decoration: BoxDecoration(
+                        color: Get.put(AppController()).isDarkMode.value
+                            ? MyAppColors.blueGrey
+                            : MyAppColors.white,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20.0)),
+                        border: const Border.fromBorderSide(BorderSide(
                             color: Color.fromARGB(64, 0, 0, 0), width: 1.0)),
-                        boxShadow: [
-                          BoxShadow(color: Colors.black, blurRadius: 10)
+                        boxShadow: const [
+                          BoxShadow(color: MyAppColors.black, blurRadius: 10)
                         ],
                       ),
                       padding: const EdgeInsetsDirectional.all(20.0),
@@ -136,6 +116,38 @@ class LoginPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+_loginPressed(BuildContext context,
+    {required GlobalKey<FormState> formKey,
+    required String username,
+    required String password}) {
+  if (formKey.currentState!.validate()) {
+    final accountController = Get.put(AccountController());
+    final appController = Get.put(AppController());
+    accountController.isAccountValid(
+      username: username,
+      password: password,
+      onComplete: (check) {
+        MyAppNotification.showAlertDialog(context: context);
+        Future.delayed(const Duration(seconds: 1), () {
+          if (check) {
+            appController.authenKey.value = username;
+            appController.saveAuthenKey();
+            MyAppNotification.showToast(content: 'Login successful!');
+            Navigator.pushNamed(context, LOAD, arguments: {
+              'nextPage': HOME,
+              'removeUntil': true,
+            });
+          } else {
+            MyAppNotification.showToast(
+                content: 'Username or password incorrectly!');
+            Navigator.pop(context);
+          }
+        });
+      },
     );
   }
 }

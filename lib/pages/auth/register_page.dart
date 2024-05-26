@@ -5,9 +5,11 @@ import 'package:myapp/components/my_app_notification.dart';
 import 'package:myapp/components/my_app_text.dart';
 import 'package:myapp/components/my_app_text_field.dart';
 import 'package:myapp/controller/account_controller.dart';
+import 'package:myapp/controller/app_controller.dart';
 import 'package:myapp/models/account_model.dart';
-import 'package:myapp/utils/local_image.dart';
+import 'package:myapp/utils/colors.dart';
 import 'package:myapp/utils/route.dart';
+import 'package:myapp/utils/local_image.dart';
 import 'package:myapp/utils/validator.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -21,40 +23,6 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    registerPressed(
-        {required GlobalKey<FormState> formKey,
-        required String username,
-        required String password,
-        required BuildContext context}) {
-      FocusScope.of(context).unfocus();
-      if (formKey.currentState!.validate()) {
-        final accountController = Get.put(AccountController());
-        accountController.addAccount(
-          newAccount: Account(
-            username: username,
-            password: password,
-            favourite: [],
-          ),
-          onComplete: (message, isSuccessful) {
-            MyAppNotification.showAlertDialog(context: context);
-            Future.delayed(const Duration(seconds: 1), () {
-              if (isSuccessful) {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  LOGIN,
-                  (route) => false,
-                  arguments: {'username': username},
-                );
-              } else {
-                Navigator.pop(context);
-              }
-              MyAppNotification.showToast(content: message);
-            });
-          },
-        );
-      }
-    }
-
     Widget form = Form(
       key: _formKey,
       child: Column(
@@ -65,8 +33,8 @@ class RegisterPage extends StatelessWidget {
             child: Image.asset(HELLO_LOG_IMG, width: 150),
           ),
           const SizedBox(height: 10),
-          const MyAppText(
-              text: 'Sign up for an account', style: MyAppTextStyles.small),
+          const MyAppText('Sign up for an account',
+              style: MyAppTextStyles.small),
           const SizedBox(height: 10),
           MyAppTextField(
             labelText: 'Username*',
@@ -100,24 +68,23 @@ class RegisterPage extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           MyAppRoundedButton(
-            name: 'Register',
-            onPressed: () => registerPressed(
+            child:
+                const MyAppText('Register', style: MyAppTextStyles.mediumBlue),
+            onPressed: () => _registerPressed(
                 formKey: _formKey,
                 username: _usernameController.text,
                 password: _passwordController.text,
-                context: context),
+                context),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const MyAppText(
-                  text: 'Do you have an account?',
+              const MyAppText('Do you have an account?',
                   style: MyAppTextStyles.small),
               TextButton(
                 onPressed: () => Navigator.pushNamedAndRemoveUntil(
                     context, LOGIN, (route) => false),
-                child: const MyAppText(
-                    text: 'Log in', style: MyAppTextStyles.small),
+                child: const MyAppText('Log in', style: MyAppTextStyles.small),
               ),
             ],
           ),
@@ -140,13 +107,16 @@ class RegisterPage extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
                     child: Container(
                       width: 300,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                        border: Border.fromBorderSide(BorderSide(
+                      decoration: BoxDecoration(
+                        color: Get.put(AppController()).isDarkMode.value
+                            ? MyAppColors.blueGrey
+                            : MyAppColors.white,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20.0)),
+                        border: const Border.fromBorderSide(BorderSide(
                             color: Color.fromARGB(64, 0, 0, 0), width: 1.0)),
-                        boxShadow: [
-                          BoxShadow(color: Colors.black, blurRadius: 10)
+                        boxShadow: const [
+                          BoxShadow(color: MyAppColors.black, blurRadius: 10)
                         ],
                       ),
                       padding: const EdgeInsetsDirectional.all(20.0),
@@ -159,6 +129,39 @@ class RegisterPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+_registerPressed(BuildContext context,
+    {required GlobalKey<FormState> formKey,
+    required String username,
+    required String password}) {
+  FocusScope.of(context).unfocus();
+  if (formKey.currentState!.validate()) {
+    final accountController = Get.put(AccountController());
+    accountController.addAccount(
+      newAccount: Account(
+        username: username,
+        password: password,
+        favourite: [],
+      ),
+      onComplete: (message, isSuccessful) {
+        MyAppNotification.showAlertDialog(context: context);
+        Future.delayed(const Duration(seconds: 1), () {
+          if (isSuccessful) {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              LOGIN,
+              (route) => false,
+              arguments: {'username': username},
+            );
+          } else {
+            Navigator.pop(context);
+          }
+          MyAppNotification.showToast(content: message);
+        });
+      },
     );
   }
 }

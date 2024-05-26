@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myapp/components/my_app_button_rounded.dart';
 import 'package:myapp/components/my_app_image.dart';
 import 'package:myapp/components/my_app_notification.dart';
 import 'package:myapp/components/my_app_text.dart';
 import 'package:myapp/controller/account_controller.dart';
 import 'package:myapp/models/comic_model.dart';
+import 'package:myapp/utils/colors.dart';
 import 'package:myapp/utils/route.dart';
 
 class MyAppItemComic extends StatelessWidget {
@@ -44,18 +46,19 @@ class MyAppItemComic extends StatelessWidget {
           });
         },
         onLongPress: () {
-          String data = accountController.getFavouriteList().contains(comic.id)
-              ? 'Remove from favorite'
-              : 'Add to favorite';
-          alertDialog(context, accountController, data);
+          bool favourite =
+              accountController.getFavouriteList().contains(comic.id)
+                  ? true
+                  : false;
+          alertDialog(context, accountController, favourite);
         },
         child: content(),
       ),
     );
   }
 
-  void alertDialog(
-      BuildContext context, AccountController accountController, String data) {
+  void alertDialog(BuildContext context, AccountController accountController,
+      bool favourite) {
     MyAppNotification.showAlertDialog(
       context: context,
       title: 'Comic Information',
@@ -64,7 +67,7 @@ class MyAppItemComic extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           MyAppText(
-            text: '${comic.title}',
+            '${comic.title}',
             style: MyAppTextStyles.mediumGrey,
             maxLines: 3,
           ),
@@ -72,7 +75,7 @@ class MyAppItemComic extends StatelessWidget {
           comic.author != null
               ? Column(children: [
                   MyAppText(
-                    text: 'Tác giả: ${comic.author}',
+                    'Tác giả: ${comic.author}',
                     style: MyAppTextStyles.smallGrey,
                     maxLines: 3,
                   ),
@@ -82,7 +85,7 @@ class MyAppItemComic extends StatelessWidget {
           comic.category != null
               ? Column(children: [
                   MyAppText(
-                    text: 'Thể loại: ${comic.category!.join(', ')}',
+                    'Thể loại: ${comic.category!.join(', ')}',
                     style: MyAppTextStyles.smallGrey,
                     maxLines: 10,
                   ),
@@ -91,7 +94,7 @@ class MyAppItemComic extends StatelessWidget {
               : const SizedBox(),
           comic.description != null
               ? MyAppText(
-                  text: 'Mô tả: ${comic.description}',
+                  'Mô tả: ${comic.description}',
                   maxLines: 20,
                   style: MyAppTextStyles.smallGrey,
                   textAlign: TextAlign.justify,
@@ -100,7 +103,7 @@ class MyAppItemComic extends StatelessWidget {
         ],
       ),
       listButton: [
-        TextButton(
+        MyAppRoundedButton(
           onPressed: () {
             if (authenKey.isEmpty) {
               MyAppNotification.showToast(
@@ -110,26 +113,31 @@ class MyAppItemComic extends StatelessWidget {
                 .contains(comic.id)) {
               accountController.removeFavourite(comic.id);
               MyAppNotification.showToast(
-                  content: 'Removed from your favorite list.');
-              data = 'Remove from favorite';
+                  content: 'Removed ${comic.title} from your favorite list.');
+              favourite = true;
               setState != null ? setState!() : null;
               Navigator.pop(context);
             } else {
               accountController.addFavourite(comic.id);
               MyAppNotification.showToast(
-                  content: 'Added to your favorite list.');
-              data = 'Add to favorrite';
+                  content: 'Added ${comic.title} to your favorite list.');
+              favourite = false;
               setState != null ? setState!() : null;
               Navigator.pop(context);
             }
           },
-          child: Text(data),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Icon(favourite ? Icons.favorite : Icons.favorite_border,
+                color: MyAppColors.blueAccent),
+          ),
         ),
-        TextButton(
+        const SizedBox(width: 20.0),
+        MyAppRoundedButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          child: const Text('Close'),
+          child: const MyAppText('Close', style: MyAppTextStyles.mediumBlue),
         ),
       ],
     );
@@ -157,14 +165,14 @@ class MyAppItemComic extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 MyAppText(
-                  text: '${comic.title}',
+                  '${comic.title}',
                   style: MyAppTextStyles.mediumBold,
                   maxLines: 1,
                   overflow: true,
                 ),
                 comic.author != null
                     ? MyAppText(
-                        text: 'Tác giả: ${comic.author}',
+                        'Tác giả: ${comic.author}',
                         style: MyAppTextStyles.smallGrey,
                         maxLines: 1,
                         overflow: true,
@@ -174,7 +182,7 @@ class MyAppItemComic extends StatelessWidget {
                     ? Column(
                         children: [
                           MyAppText(
-                            text: '${comic.description}',
+                            '${comic.description}',
                             style: MyAppTextStyles.smallGrey,
                             maxLines: 3,
                             overflow: true,
@@ -186,7 +194,7 @@ class MyAppItemComic extends StatelessWidget {
                     : const SizedBox(),
                 comic.category != null
                     ? MyAppText(
-                        text: 'Thể loại: ${comic.category!.join(', ')}',
+                        'Thể loại: ${comic.category!.join(', ')}',
                         style: MyAppTextStyles.smallGrey,
                         maxLines: 1,
                         overflow: true,

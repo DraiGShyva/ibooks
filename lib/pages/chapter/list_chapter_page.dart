@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myapp/components/my_app_text.dart';
 import 'package:myapp/controller/chapter_controller.dart';
+import 'package:myapp/controller/comic_controller.dart';
+import 'package:myapp/utils/colors.dart';
 import 'package:myapp/utils/route.dart';
 
 class ListChapterPage extends StatelessWidget {
@@ -15,9 +18,10 @@ class ListChapterPage extends StatelessWidget {
       final chapters = chapterController.getListChapter(id).chapters;
       return Scaffold(
         appBar: AppBar(
-          title: const Text('Chapters'),
+          title: MyAppText(
+              Get.put(ComicController()).getComic(id).title ?? 'Chapters'),
           centerTitle: true,
-          backgroundColor: Colors.blue,
+          backgroundColor: MyAppColors.blueAccent,
         ),
         body: ListView.builder(
           itemCount: chapters.length,
@@ -44,7 +48,7 @@ class ListChapterPage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Chapters'),
           centerTitle: true,
-          backgroundColor: Colors.blue,
+          backgroundColor: MyAppColors.blueAccent,
         ),
         body: const Center(
           child: Text('Chapter not found!'),

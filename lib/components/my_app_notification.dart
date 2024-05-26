@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/components/my_app_text.dart';
+import 'package:myapp/utils/colors.dart';
 
 class MyAppNotification {
   MyAppNotification._();
 
+  static List<String> notifications = [];
+
   static void showToast({required String content, int time = 3}) {
+    notifications.add(content);
     Fluttertoast.showToast(
       msg: content,
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       backgroundColor: Colors.grey[800],
-      textColor: Colors.white,
+      textColor: MyAppColors.white,
       timeInSecForIosWeb: time,
     );
   }
@@ -25,14 +29,13 @@ class MyAppNotification {
       context: context,
       builder: (BuildContext context) {
         return Material(
-          color: Colors.transparent,
+          color: MyAppColors.transparent,
           child: GestureDetector(
             onTap: () {
               FocusScope.of(context).unfocus();
             },
             child: AlertDialog(
-              title: MyAppText(
-                  text: title,
+              title: MyAppText(title,
                   style: MyAppTextStyles.mediumBold,
                   textAlign: TextAlign.center),
               content: content ??
@@ -40,7 +43,7 @@ class MyAppNotification {
                     child: CircularProgressIndicator(),
                   ),
               actions: listButton,
-              actionsAlignment: MainAxisAlignment.spaceBetween,
+              actionsAlignment: MainAxisAlignment.center,
             ),
           ),
         );

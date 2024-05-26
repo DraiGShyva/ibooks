@@ -20,6 +20,10 @@ class ComicController extends GetxController {
     }
     onLoading(false);
   }
+
+  Comic getComic(String id) {
+    return comics().listComic.firstWhere((comic) => comic.id == id);
+  }
 }
 
 class ComicService {
@@ -72,7 +76,7 @@ class ComicService {
       'img': 'assets/images/comics/1O65Qahot1bPvEYSzUmNM3zRKP98gNy7f.jpg',
       'category': ['Manhwa', 'Phiêu Lưu', 'Murim', 'Hành Động', 'Võ Thuật'],
       'description':
-          "Một ngày nọ, linh hồn của Thủ lĩnh Liên minh Murim quyến rũ và uy nghiêm, Hu Gong, đột nhiên chiếm hữu cơ thể của một chàng trai trẻ.\r\n\r\n\r\n\r\nChàng thanh niên đó tên là Beom Hang. Anh ta là chủ nhân trẻ tuổi của 'Thiên đại lục', một trong ba kho lưu trữ lớn của jianghu, nhưng lại là một cái cớ xin lỗi của một người.\r\n\r\n\r\n\r\nĐể xác định lý do tại sao linh hồn của mình lại hoán đổi thân xác, Hu Gong bắt đầu huấn luyện cơ thể của Beom Hang. Khi chủ nhân trẻ tuổi bị chiếm hữu của Thiên Đại Lưu Trữ hoàn toàn khác với trước đây, nó bắt đầu thu hút sự chú ý của giang hồ…"
+          "Một ngày nọ, linh hồn của Thủ lĩnh Liên minh Murim quyến rũ và uy nghiêm, Hu Gong, đột nhiên chiếm hữu cơ thể của một chàng trai trẻ.Chàng thanh niên đó tên là Beom Hang. Anh ta là chủ nhân trẻ tuổi của 'Thiên đại lục', một trong ba kho lưu trữ lớn của jianghu, nhưng lại là một cái cớ xin lỗi của một người.Để xác định lý do tại sao linh hồn của mình lại hoán đổi thân xác, Hu Gong bắt đầu huấn luyện cơ thể của Beom Hang. Khi chủ nhân trẻ tuổi bị chiếm hữu của Thiên Đại Lưu Trữ hoàn toàn khác với trước đây, nó bắt đầu thu hút sự chú ý của giang hồ…"
     },
     {
       'id': 'nguoi-choi-tro-lai-sau-10000-nam',
@@ -80,7 +84,7 @@ class ComicService {
       'img': 'assets/images/comics/1p3_rIbn_bvWDEIYtyMuHgedzKwGj88d5.jpg',
       'category': ['Manhwa', 'Phiêu Lưu', 'Huyền Bí', 'Hành Động'],
       'description':
-          'Một ngày nọ, lạc lõng, anh ta rơi vào địa ngục. Tất cả những gì anh ta có với anh ta là khát vọng sống và sức mạnh để sinh tồn. \r\r\nTừ địa ngục thứ 1000 đến địa ngục thứ 9000, anh ta đã nuốt chửng hàng chục và hàng trăm nghìn con quỷ, và thậm chí cả bảy thành trì quy hàng trước anh ta. \r\r\n“Tại sao bạn lại muốn quay trở lại? người đã có tất cả mọi thứ trong địa ngục này. "\r\r\n" Mọi thứ? cái mông của tôi. "\r\r\nKhông có gì để ăn hoặc thưởng thức ở đây! Địa ngục không là gì ngoài vùng đất hoang vắng đầy những con quỷ khủng khiếp! \r\r\n“Tôi sẽ trở lại.“ Sau mười ngàn năm dài, cuối cùng anh ấy cũng trở lại Trái đất.'
+          'Một ngày nọ, lạc lõng, anh ta rơi vào địa ngục. Tất cả những gì anh ta có với anh ta là khát vọng sống và sức mạnh để sinh tồn. Từ địa ngục thứ 1000 đến địa ngục thứ 9000, anh ta đã nuốt chửng hàng chục và hàng trăm nghìn con quỷ, và thậm chí cả bảy thành trì quy hàng trước anh ta. “Tại sao bạn lại muốn quay trở lại? người đã có tất cả mọi thứ trong địa ngục này. "" Mọi thứ? cái mông của tôi. "Không có gì để ăn hoặc thưởng thức ở đây! Địa ngục không là gì ngoài vùng đất hoang vắng đầy những con quỷ khủng khiếp! “Tôi sẽ trở lại.“ Sau mười ngàn năm dài, cuối cùng anh ấy cũng trở lại Trái đất.'
     },
     {
       'id': 'hoi-uc-chien-than',
@@ -104,7 +108,7 @@ class ComicService {
       'img': 'assets/images/comics/1DTzRCDISHWcG3ssqmB8liLYbSKb6OGu6.jpg',
       'category': ['Săn Bắn', 'Manhwa', 'Game', 'Huyền Bí', 'Phiêu Lưu'],
       'description':
-          'Game nhập vai tấn công ngục tối và phòng thủ tháp,\r\nTôi đã xem đoạn kết của trò chơi với một độ khó mà chưa ai giải quyết được.\r\nNhưng khi tỉnh dậy, tôi đã ở trong trò chơi. Hơn hết, ở giai đoạn hướng dẫn mà tôi dường như không thể vượt qua.\r\n“Tôi sẽ hoàn thành trò chơi chết tiệt này bằng mọi giá…!”'
+          'Game nhập vai tấn công ngục tối và phòng thủ tháp,Tôi đã xem đoạn kết của trò chơi với một độ khó mà chưa ai giải quyết được.Nhưng khi tỉnh dậy, tôi đã ở trong trò chơi. Hơn hết, ở giai đoạn hướng dẫn mà tôi dường như không thể vượt qua.“Tôi sẽ hoàn thành trò chơi chết tiệt này bằng mọi giá…!”'
     },
     {
       'id': 'tuy-kiem-da-hanh',
@@ -151,8 +155,7 @@ class ComicService {
       'title': 'Tôi Đã Giết Tuyển Thủ Học Viện',
       'img': 'assets/images/comics/1HnzGnv2JUCCPIQFXtYmvCEjsohgmRchg.jpg',
       'category': ['Manhwa', 'Hài Hước', 'Hành Động'],
-      'description':
-          'Tôi đã giết người chơi.\r\r\nHắn ta đúng là một tên khốn nạn…'
+      'description': 'Tôi đã giết người chơi.Hắn ta đúng là một tên khốn nạn…'
     },
     {
       'id': 'hoang-tu-ban-thuoc',
@@ -183,7 +186,7 @@ class ComicService {
       'img': 'assets/images/comics/1yMbzPTDi4ZJOSAOzYnl52iA6usNjKe5M.jpg',
       'category': ['Siêu Nhiên', 'Trùng Sinh', 'Huyền Bí', 'Manhua'],
       'description':
-          'thiếu niên Tà Thiên, vận mệnh nhiều thăng trầm, ngẫu nhiên đạt được truyền thừa, Chư Giới muốn trảm. Xông Cửu Châu, sát phá non sông! Chiến Thất Giới, Tà chữ che trời!\r\r\r\n\r\r\r\nTiên đến, ta tru!\r\r\r\n\r\r\r\nPhật đến, ta đồ!\r\r\r\nGiết hết chín thành chín, lưu một đám, nhìn ta xé trời!'
+          'thiếu niên Tà Thiên, vận mệnh nhiều thăng trầm, ngẫu nhiên đạt được truyền thừa, Chư Giới muốn trảm. Xông Cửu Châu, sát phá non sông! Chiến Thất Giới, Tà chữ che trời!Tiên đến, ta tru!Phật đến, ta đồ!Giết hết chín thành chín, lưu một đám, nhìn ta xé trời!'
     },
     {
       'id': 'ta-co-mot-son-trai',
@@ -214,7 +217,7 @@ class ComicService {
       'img': 'assets/images/comics/1mEnX98j2X_dBOYYiURbz1UqNbDk24moN.jpg',
       'category': ['Hành Động', 'Phiêu Lưu', 'Manhwa'],
       'description':
-          "(천마육성)Một nhóm trinh sát đã được chỉ định đến khu vực của Mount Hua Sect bởi thủ lĩnh vĩ đại của họ, ‘The Mantis.’\r\n\r\nNhân vật chính ‘Seol Hwi’ đối mặt với Đạo sư phái Hua ‘Goo Jong\r\n\r\nMyung, 'và rơi vào tình trạng nguy hiểm chết người.\r\n\r\nMột cửa sổ trạng thái sau đó bật lên và khiến anh ta quay trở lại thời điểm trước khi anh ta nhận nhiệm vụ do thám.\r\n\r\nKhi anh ta nhận được cùng một nhiệm vụ trinh sát khiến anh ta chết, Seol Hui đấu tranh để thay đổi thực tế không thể tránh khỏi.\r\n\r\nMột cửa sổ trạng thái xuất hiện mọi khủng hoảng.\r\n\r\nLựa chọn với tương lai không chắc chắn.\r\n\r\nCâu chuyện về Seol Hwi khi anh ấy cố gắng tìm ra quyết định tốt nhất trong thế giới của mình xen lẫn giữa sự sống và cái chết."
+          "(천마육성)Một nhóm trinh sát đã được chỉ định đến khu vực của Mount Hua Sect bởi thủ lĩnh vĩ đại của họ, ‘The Mantis.’Nhân vật chính ‘Seol Hwi’ đối mặt với Đạo sư phái Hua ‘Goo JongMyung, 'và rơi vào tình trạng nguy hiểm chết người.Một cửa sổ trạng thái sau đó bật lên và khiến anh ta quay trở lại thời điểm trước khi anh ta nhận nhiệm vụ do thám.Khi anh ta nhận được cùng một nhiệm vụ trinh sát khiến anh ta chết, Seol Hui đấu tranh để thay đổi thực tế không thể tránh khỏi.Một cửa sổ trạng thái xuất hiện mọi khủng hoảng.Lựa chọn với tương lai không chắc chắn.Câu chuyện về Seol Hwi khi anh ấy cố gắng tìm ra quyết định tốt nhất trong thế giới của mình xen lẫn giữa sự sống và cái chết."
     },
     {
       'id': 'toi-lam-vuon-tai-the-gioi-tho-san',
@@ -222,7 +225,7 @@ class ComicService {
       'img': 'assets/images/comics/1uNVSNc7iOBpxCI7p5OLohliiEtXk3Ci_.jpg',
       'category': ['Manhwa', 'Phiêu Lưu', 'Hầm Ngục'],
       'description':
-          "Jiha, thợ săn thuộc tầng lớp lao động yếu nhất, không có kỹ năng cũng như khả năng chiến đấu, kiếm sống bằng cách điều hành một cửa hàng trong khi giữ cấp bậc thợ săn thấp nhất.\r\n\r\nNhưng một ngày nọ, cuộc sống thợ săn của anh thay đổi khi anh bước vào một khu vườn từ một chiều không gian khác thông qua giấc mơ của mình...\r\n\r\n<Bạn đã nhận được Cây thân thiện Lv.1> <Bạn đã nhận được Phước lành XXX Lv.1>\r\n\r\n'Mình đã đạt được kỹ năng chỉ bằng cách trồng một cành cây...?'\r\n\r\nCuộc phiêu lưu độc đáo của anh với tư cách là người làm vườn duy nhất trong thế giới thợ săn bắt đầu."
+          "Jiha, thợ săn thuộc tầng lớp lao động yếu nhất, không có kỹ năng cũng như khả năng chiến đấu, kiếm sống bằng cách điều hành một cửa hàng trong khi giữ cấp bậc thợ săn thấp nhất.Nhưng một ngày nọ, cuộc sống thợ săn của anh thay đổi khi anh bước vào một khu vườn từ một chiều không gian khác thông qua giấc mơ của mình...<Bạn đã nhận được Cây thân thiện Lv.1> <Bạn đã nhận được Phước lành XXX Lv.1>'Mình đã đạt được kỹ năng chỉ bằng cách trồng một cành cây...?'Cuộc phiêu lưu độc đáo của anh với tư cách là người làm vườn duy nhất trong thế giới thợ săn bắt đầu."
     },
     {
       'id': 'nhung-nhan-vat-chinh-ma-chi-toi-biet',
@@ -246,7 +249,7 @@ class ComicService {
       'img': 'assets/images/comics/1rfBEoZtLmd74o8tFdNZ-j-2l6WfBshfl.jpg',
       'category': ['Manhwa', 'Phiêu Lưu', 'Hành Động'],
       'description':
-          "Tôi chưa bao giờ nghĩ mình có thể trở thành một thợ săn.\r\n\r\nTôi chưa bao giờ nghĩ mình sẽ có cơ hội.\r\n\r\nNhưng rồi...\r\n\r\n'Tháp thử thách' đã chọn tất cả các ứng cử viên phù hợp từ Trái đất. \r\n\r\nVui lòng chọn độ khó của bạn. \r\n\r\nPhần thưởng bạn nhận được sẽ tỷ lệ thuận với độ khó bạn đã chọn. \r\n\r\nTôi đã được trao một cơ hội ngay bây giờ."
+          "Tôi chưa bao giờ nghĩ mình có thể trở thành một thợ săn.Tôi chưa bao giờ nghĩ mình sẽ có cơ hội.Nhưng rồi...'Tháp thử thách' đã chọn tất cả các ứng cử viên phù hợp từ Trái đất. Vui lòng chọn độ khó của bạn. Phần thưởng bạn nhận được sẽ tỷ lệ thuận với độ khó bạn đã chọn. Tôi đã được trao một cơ hội ngay bây giờ."
     },
     {
       'id': 'su-tro-lai-cua-huyen-thoai',
@@ -254,7 +257,7 @@ class ComicService {
       'img': 'assets/images/comics/1MErSaIYxpvSJN154HYBNBU-1wYbTfZ4B.jpg',
       'category': ['Manhwa', 'Bi Kịch', 'Trùng Sinh'],
       'description':
-          'Do tình huống giống như IMF thứ hai, công ty bảo mật mà Jang Taesan làm việc bị phá sản, và anh ta trở thành một người đàn ông thất nghiệp lang thang khắp Noryangjin-dong.\r\r\nAnh mất mạng khi cứu một học sinh tiểu học suýt bị ô tô đâm. Nhưng nhờ hành động tốt của mình, anh ấy đã quay ngược thời gian 14 năm và được chào đón với một cuộc sống mới.\r\r\n\r\r\nTuy nhiên, niềm vui được hồi sinh thật ngắn ngủi. Ý nghĩ lại phải thi vào đại học khiến tôi choáng váng…\r\r\nNhưng tôi nhớ tất cả các vấn đề CSAT mà tôi gặp phải khi nghiên cứu và biểu đồ thị trường chứng khoán mà tôi đã thấy khi làm môi giới chứng khoán… ?! Kiếp trước đã tàn, nhưng kiếp sau này sẽ công thành!'
+          'Do tình huống giống như IMF thứ hai, công ty bảo mật mà Jang Taesan làm việc bị phá sản, và anh ta trở thành một người đàn ông thất nghiệp lang thang khắp Noryangjin-dong.Anh mất mạng khi cứu một học sinh tiểu học suýt bị ô tô đâm. Nhưng nhờ hành động tốt của mình, anh ấy đã quay ngược thời gian 14 năm và được chào đón với một cuộc sống mới.Tuy nhiên, niềm vui được hồi sinh thật ngắn ngủi. Ý nghĩ lại phải thi vào đại học khiến tôi choáng váng…Nhưng tôi nhớ tất cả các vấn đề CSAT mà tôi gặp phải khi nghiên cứu và biểu đồ thị trường chứng khoán mà tôi đã thấy khi làm môi giới chứng khoán… ?! Kiếp trước đã tàn, nhưng kiếp sau này sẽ công thành!'
     },
     {
       'id': 'ke-bat-bai',
@@ -270,7 +273,7 @@ class ComicService {
       'img': 'assets/images/comics/1uWFLaqEna54MHAkb9X-kQs_q-tlxWuCk.jpg',
       'category': ['Phiêu Lưu', 'Hành Động', 'Bạo Lực', 'Manhwa'],
       'description':
-          "Sau khi bị tổ chức mà anh ta làm việc phản bội và giết chết, sát thủ khét tiếng 'Bi-Gwang' tái sinh thành 'Kim Gyeongsoo', một sĩ quan cảnh sát. \r\r\n\r\r\nAnh thề sẽ trả thù 'Hwaguksa',\r\r\n\r\r\ntổ chức của những kẻ giết người đã phản bội anh."
+          "Sau khi bị tổ chức mà anh ta làm việc phản bội và giết chết, sát thủ khét tiếng 'Bi-Gwang' tái sinh thành 'Kim Gyeongsoo', một sĩ quan cảnh sát. Anh thề sẽ trả thù 'Hwaguksa',tổ chức của những kẻ giết người đã phản bội anh."
     }
   ];
 }

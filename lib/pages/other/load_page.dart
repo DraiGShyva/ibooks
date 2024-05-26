@@ -11,6 +11,13 @@ class LoadPage extends StatefulWidget {
 
   @override
   State<LoadPage> createState() => _LoadPageState();
+
+  static Widget? _nextClass;
+
+  static widget({required Widget next}) {
+    _nextClass = next;
+    return const LoadPage();
+  }
 }
 
 class _LoadPageState extends State<LoadPage> {
@@ -18,11 +25,19 @@ class _LoadPageState extends State<LoadPage> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 1), () {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        widget.nextPage,
-        (route) => false,
-      );
+      if (LoadPage._nextClass != null) {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => LoadPage._nextClass!),
+          (route) => false,
+        );
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          widget.nextPage,
+          (route) => false,
+        );
+      }
     });
   }
 

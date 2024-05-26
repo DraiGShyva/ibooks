@@ -2,15 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:myapp/controller/account_controller.dart';
+import 'package:myapp/controller/app_controller.dart';
+import 'package:myapp/controller/chapter_controller.dart';
 import 'package:myapp/controller/comic_controller.dart';
-import 'package:myapp/pages/Auth/login_page.dart';
-import 'package:myapp/pages/Auth/register_page.dart';
+import 'package:myapp/pages/auth/login_page.dart';
+import 'package:myapp/pages/auth/register_page.dart';
 import 'package:myapp/pages/begin/onboarding_page.dart';
 import 'package:myapp/pages/chapter/list_chapter_page.dart';
 import 'package:myapp/pages/chapter/chapter_page.dart';
 import 'package:myapp/pages/home/bottom_nav_bar.dart';
+import 'package:myapp/pages/other/category_selection_page.dart';
 import 'package:myapp/pages/other/load_page.dart';
 import 'package:myapp/pages/begin/splash_page.dart';
+import 'package:myapp/pages/other/notification_page.dart';
+import 'package:myapp/pages/other/search_page.dart';
+import 'package:myapp/utils/colors.dart';
 import 'package:myapp/utils/route.dart';
 
 import 'controller/banner_controller.dart';
@@ -24,13 +30,13 @@ void main() {
   ]);
 
   SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+    const SystemUiOverlayStyle(statusBarColor: MyAppColors.transparent),
   );
 
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   static onGenerateRoute(settings) => MaterialPageRoute(
@@ -57,10 +63,8 @@ class MyApp extends StatelessWidget {
             case HOME:
               Get.put(BannerController()).onInit();
               Get.put(ComicController()).onInit();
-              return const LoadPage(nextPage: BOTTOM_NAV_BAR);
-
-            case BOTTOM_NAV_BAR:
-              return BottomNavBar();
+              Get.put(ChapterController()).onInit();
+              return LoadPage.widget(next: const BottomNavBar());
 
             case LIST_CHAPTER:
               return ListChapterPage(id: settings.arguments['id']);
@@ -74,6 +78,15 @@ class MyApp extends StatelessWidget {
             case ONBOARDING:
               return const OnboardingPage();
 
+            case SEARCH:
+              return SearchPage(searchItem: settings.arguments['searchItem']);
+
+            case CATEGORY_SELECTION:
+              return CategorySelectionPage(items: settings.arguments['items']);
+
+            case NOTIFICATION:
+              return const NotificationPage();
+
             default:
               return const SplashPage();
           }
@@ -81,13 +94,26 @@ class MyApp extends StatelessWidget {
       );
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = ThemeData(
+        useMaterial3: true,
+        brightness: Get.put(AppController()).isDarkMode.value
+            ? Brightness.dark
+            : Brightness.light);
+
+    Get.put(AppController()).isDarkMode.listen((isDarkMode) {
+      if (mounted) setState(() {});
+    });
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
-      onGenerateRoute: (settings) => onGenerateRoute(settings),
+      theme: themeData,
+      onGenerateRoute: (settings) => MyApp.onGenerateRoute(settings),
     );
   }
 }

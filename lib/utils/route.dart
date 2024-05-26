@@ -8,3 +8,6 @@ const String LIST_CHAPTER = '/list-chapter';
 const String CHAPTER = '/chapter';
 const String SPLASH = '/splash';
 const String ONBOARDING = '/onboarding';
+const String SEARCH = '/search';
+const String CATEGORY_SELECTION = '/category-selection';
+const String NOTIFICATION = '/notification';
