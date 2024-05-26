@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:myapp/controller/account_controller.dart';
 import 'package:myapp/controller/app_controller.dart';
+import 'package:myapp/controller/banner_controller.dart';
 import 'package:myapp/controller/chapter_controller.dart';
 import 'package:myapp/controller/comic_controller.dart';
 import 'package:myapp/pages/auth/login_page.dart';
@@ -18,8 +19,6 @@ import 'package:myapp/pages/other/notification_page.dart';
 import 'package:myapp/pages/other/search_page.dart';
 import 'package:myapp/utils/colors.dart';
 import 'package:myapp/utils/route.dart';
-
-import 'controller/banner_controller.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
