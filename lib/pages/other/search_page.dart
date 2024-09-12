@@ -61,18 +61,16 @@ class _SearchPageState extends State<SearchPage> {
           ),
         ),
       ),
-      body: Expanded(
-        child: ListView.builder(
-          itemCount: _searchResults.length,
-          itemBuilder: (context, index) {
-            return MyAppItemComic(
-              context: context,
-              comic: _searchResults[index],
-              authenKey: Get.put(AppController()).authenKey.value,
-              setState: () => setState(() {}),
-            );
-          },
-        ),
+      body: ListView.builder(
+        itemCount: _searchResults.length,
+        itemBuilder: (context, index) {
+          return MyAppItemComic(
+            context: context,
+            comic: _searchResults[index],
+            authenKey: Get.put(AppController()).authenKey.value,
+            setState: () => setState(() {}),
+          );
+        },
       ),
     );
   }

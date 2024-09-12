@@ -21,6 +21,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
     return Scaffold(
       body: PageView(
         controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            _currentPage = index;
+          });
+        },
         children: List.generate(
           _onboardingData.length,
           (index) => _buildPage(
@@ -74,10 +79,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
     return MyAppRoundedButton(
       onPressed: () {
         setState(() {
-          if (_currentPage > 0) {
-            _currentPage--;
-            _pageController.jumpToPage(_currentPage);
-          }
+          _currentPage--;
+          _pageController.jumpToPage(_currentPage);
         });
       },
       child: const MyAppText('Quay lại'),
