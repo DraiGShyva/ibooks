@@ -1,10 +1,9 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:myapp/controller/app_controller.dart';
 import 'package:myapp/models/account_model.dart';
+import 'package:myapp/controller/service/account_service.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountController extends GetxController {
   final accounts = ListAccount(data: []).obs;
@@ -142,22 +141,5 @@ class AccountController extends GetxController {
     } catch (e) {
       return 'Error: $e';
     }
-  }
-}
-
-class AccountService {
-  static Future<ListAccount?> fetchAccounts() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? accountsString = prefs.getString('accounts');
-    if (accountsString != null) {
-      final List<dynamic> jsonList = jsonDecode(accountsString);
-      return ListAccount.fromJson(jsonList);
-    }
-    return null;
-  }
-
-  static Future<void> saveAccounts(ListAccount accounts) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('accounts', jsonEncode(accounts.toJson()));
   }
 }
