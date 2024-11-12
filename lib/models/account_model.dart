@@ -1,7 +1,7 @@
 class Account {
-  final String username;
+  String username;
   String password;
-  final List<String> favourite;
+  List<String> favourite;
   String avatar;
 
   Account({
@@ -27,7 +27,7 @@ class Account {
 }
 
 class ListAccount {
-  final List<Account> data;
+  List<Account> data;
 
   ListAccount({required this.data});
 

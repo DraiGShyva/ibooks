@@ -1,6 +1,6 @@
 class Chapter {
-  final String chapNumber;
-  final List images;
+  String chapNumber;
+  List images;
 
   Chapter({
     required this.chapNumber,
@@ -23,8 +23,8 @@ class Chapter {
 }
 
 class ListChapter {
-  final String id;
-  final List<Chapter> chapters;
+  String id;
+  List<Chapter> chapters;
 
   ListChapter({
     required this.id,
@@ -48,7 +48,7 @@ class ListChapter {
 }
 
 class ListComicChapter {
-  final List<ListChapter> listComicChapter;
+  List<ListChapter> listComicChapter;
 
   ListComicChapter({
     required this.listComicChapter,

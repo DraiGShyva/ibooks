@@ -1,10 +1,10 @@
 class Comic {
-  final String id;
-  final String? title;
-  final String? img;
-  final String? author;
-  final List<String>? category;
-  final String? description;
+  String id;
+  String? title;
+  String? img;
+  String? author;
+  List<String>? category;
+  String? description;
 
   Comic({
     required this.id,
@@ -39,7 +39,7 @@ class Comic {
 }
 
 class ListComic {
-  final List<Comic> listComic;
+  List<Comic> listComic;
 
   ListComic({required this.listComic});
 
