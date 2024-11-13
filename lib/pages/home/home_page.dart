@@ -1,17 +1,17 @@
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myapp/components/my_app_auto_page_view.dart';
-import 'package:myapp/components/my_app_button_diamond.dart';
-import 'package:myapp/components/my_app_image.dart';
-import 'package:myapp/components/my_app_item_comic.dart';
-import 'package:myapp/components/my_app_list_view.dart';
-import 'package:myapp/components/my_app_notification.dart';
-import 'package:myapp/controller/app_controller.dart';
-import 'package:myapp/controller/banner_controller.dart';
-import 'package:myapp/controller/comic_controller.dart';
-import 'package:myapp/utils/colors.dart';
-import 'package:myapp/utils/route.dart';
+import 'package:ibooks/components/my_app_auto_page_view.dart';
+import 'package:ibooks/components/my_app_button_diamond.dart';
+import 'package:ibooks/components/my_app_image.dart';
+import 'package:ibooks/components/my_app_item_comic.dart';
+import 'package:ibooks/components/my_app_list_view.dart';
+import 'package:ibooks/components/my_app_notification.dart';
+import 'package:ibooks/controller/app_controller.dart';
+import 'package:ibooks/controller/banner_controller.dart';
+import 'package:ibooks/controller/comic_controller.dart';
+import 'package:ibooks/utils/colors.dart';
+import 'package:ibooks/utils/route.dart';
 
 class HomePage extends StatefulWidget {
   final NotchBottomBarController? controller;

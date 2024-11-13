@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myapp/components/my_app_item_comic.dart';
-import 'package:myapp/components/my_app_list_view.dart';
-import 'package:myapp/controller/account_controller.dart';
-import 'package:myapp/controller/app_controller.dart';
-import 'package:myapp/controller/comic_controller.dart';
+import 'package:ibooks/components/my_app_item_comic.dart';
+import 'package:ibooks/components/my_app_list_view.dart';
+import 'package:ibooks/controller/account_controller.dart';
+import 'package:ibooks/controller/app_controller.dart';
+import 'package:ibooks/controller/comic_controller.dart';
 
 class FavouritePage extends StatefulWidget {
   const FavouritePage({super.key});

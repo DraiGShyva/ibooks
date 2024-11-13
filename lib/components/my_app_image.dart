@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:myapp/utils/local_image.dart';
+import 'package:ibooks/utils/local_image.dart';
 
 class MyAppImage extends StatefulWidget {
   const MyAppImage(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myapp/controller/app_controller.dart';
-import 'package:myapp/utils/local_image.dart';
-import 'package:myapp/utils/route.dart';
+import 'package:ibooks/controller/app_controller.dart';
+import 'package:ibooks/utils/local_image.dart';
+import 'package:ibooks/utils/route.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});

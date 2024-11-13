@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:myapp/controller/service/chapter_controller.dart';
-import 'package:myapp/models/chapter_model.dart';
+import 'package:ibooks/controller/service/chapter_controller.dart';
+import 'package:ibooks/models/chapter_model.dart';
 
 class ChapterController extends GetxController {
   final listComicChapter = ListComicChapter(listComicChapter: []).obs;

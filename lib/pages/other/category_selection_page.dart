@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myapp/components/my_app_item_comic.dart';
-import 'package:myapp/components/my_app_text.dart';
-import 'package:myapp/controller/app_controller.dart';
-import 'package:myapp/models/comic_model.dart';
+import 'package:ibooks/components/my_app_item_comic.dart';
+import 'package:ibooks/components/my_app_text.dart';
+import 'package:ibooks/controller/app_controller.dart';
+import 'package:ibooks/models/comic_model.dart';
 
 class CategorySelectionPage extends StatefulWidget {
   const CategorySelectionPage({super.key, required this.items});

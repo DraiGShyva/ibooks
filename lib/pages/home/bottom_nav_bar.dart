@@ -1,13 +1,13 @@
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myapp/components/my_app_bottom_navigation_bar.dart';
-import 'package:myapp/components/my_app_text.dart';
-import 'package:myapp/controller/app_controller.dart';
-import 'package:myapp/pages/home/account_page.dart';
-import 'package:myapp/pages/home/favourite_page.dart';
-import 'package:myapp/pages/home/home_page.dart';
-import 'package:myapp/utils/colors.dart';
+import 'package:ibooks/components/my_app_bottom_navigation_bar.dart';
+import 'package:ibooks/components/my_app_text.dart';
+import 'package:ibooks/controller/app_controller.dart';
+import 'package:ibooks/pages/home/account_page.dart';
+import 'package:ibooks/pages/home/favourite_page.dart';
+import 'package:ibooks/pages/home/home_page.dart';
+import 'package:ibooks/utils/colors.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});

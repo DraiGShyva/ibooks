@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/components/my_app_notification.dart';
-import 'package:myapp/components/my_app_text.dart';
+import 'package:ibooks/components/my_app_notification.dart';
+import 'package:ibooks/components/my_app_text.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({super.key});

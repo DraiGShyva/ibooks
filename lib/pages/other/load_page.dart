@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/utils/route.dart';
+import 'package:ibooks/utils/route.dart';
 
 class LoadPage extends StatefulWidget {
   const LoadPage({

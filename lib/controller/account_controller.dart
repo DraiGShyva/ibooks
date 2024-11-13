@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:get/get.dart';
-import 'package:myapp/controller/app_controller.dart';
-import 'package:myapp/models/account_model.dart';
-import 'package:myapp/controller/service/account_service.dart';
+import 'package:ibooks/controller/app_controller.dart';
+import 'package:ibooks/models/account_model.dart';
+import 'package:ibooks/controller/service/account_service.dart';
 import 'package:path_provider/path_provider.dart';
 
 class AccountController extends GetxController {

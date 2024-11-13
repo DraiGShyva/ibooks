@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myapp/components/my_app_image.dart';
-import 'package:myapp/components/my_app_list_view.dart';
-import 'package:myapp/components/my_app_text.dart';
-import 'package:myapp/controller/chapter_controller.dart';
-import 'package:myapp/utils/colors.dart';
+import 'package:ibooks/components/my_app_image.dart';
+import 'package:ibooks/components/my_app_list_view.dart';
+import 'package:ibooks/components/my_app_text.dart';
+import 'package:ibooks/controller/chapter_controller.dart';
+import 'package:ibooks/utils/colors.dart';
 
 class ChapterPage extends StatefulWidget {
   const ChapterPage({super.key, required this.id, required this.chapNumber});

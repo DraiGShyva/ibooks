@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myapp/controller/app_controller.dart';
-import 'package:myapp/utils/colors.dart';
+import 'package:ibooks/controller/app_controller.dart';
+import 'package:ibooks/utils/colors.dart';
 
 class MyAppRoundedButton extends StatelessWidget {
   MyAppRoundedButton({

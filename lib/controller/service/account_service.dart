@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:myapp/models/account_model.dart';
+import 'package:ibooks/models/account_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountService {

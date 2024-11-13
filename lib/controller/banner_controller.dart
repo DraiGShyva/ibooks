@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:myapp/controller/service/banner_service.dart';
-import 'package:myapp/models/banner_model.dart';
+import 'package:ibooks/controller/service/banner_service.dart';
+import 'package:ibooks/models/banner_model.dart';
 
 class BannerController extends GetxController {
   final banners = ListBanner(listBanner: []).obs;

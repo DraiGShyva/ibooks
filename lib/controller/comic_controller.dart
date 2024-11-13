@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:myapp/controller/service/comic_servive.dart';
-import 'package:myapp/models/comic_model.dart';
+import 'package:ibooks/controller/service/comic_servive.dart';
+import 'package:ibooks/models/comic_model.dart';
 
 class ComicController extends GetxController {
   final comics = ListComic(listComic: [Comic(id: '')]).obs;

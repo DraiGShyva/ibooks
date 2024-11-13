@@ -1,4 +1,4 @@
-import 'package:myapp/models/banner_model.dart';
+import 'package:ibooks/models/banner_model.dart';
 
 class BannerService {
   static Future<ListBanner?> fetchBanners() async {

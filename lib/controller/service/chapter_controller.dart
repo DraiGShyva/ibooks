@@ -1,4 +1,4 @@
-import 'package:myapp/models/chapter_model.dart';
+import 'package:ibooks/models/chapter_model.dart';
 
 class ChapterService {
   static Future<ListComicChapter?> fetchChapters() async {

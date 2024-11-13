@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/utils/colors.dart';
+import 'package:ibooks/utils/colors.dart';
 
 class MyAppText extends StatelessWidget {
   const MyAppText(

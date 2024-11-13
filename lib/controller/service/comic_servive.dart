@@ -1,4 +1,4 @@
-import 'package:myapp/models/comic_model.dart';
+import 'package:ibooks/models/comic_model.dart';
 
 class ComicService {
   static Future<ListComic?> fetchComic() async {

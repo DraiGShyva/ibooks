@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myapp/components/my_app_button_rounded.dart';
-import 'package:myapp/components/my_app_image.dart';
-import 'package:myapp/components/my_app_notification.dart';
-import 'package:myapp/components/my_app_text.dart';
-import 'package:myapp/controller/account_controller.dart';
-import 'package:myapp/models/comic_model.dart';
-import 'package:myapp/utils/colors.dart';
-import 'package:myapp/utils/route.dart';
+import 'package:ibooks/components/my_app_button_rounded.dart';
+import 'package:ibooks/components/my_app_image.dart';
+import 'package:ibooks/components/my_app_notification.dart';
+import 'package:ibooks/components/my_app_text.dart';
+import 'package:ibooks/controller/account_controller.dart';
+import 'package:ibooks/models/comic_model.dart';
+import 'package:ibooks/utils/colors.dart';
+import 'package:ibooks/utils/route.dart';
 
 class MyAppItemComic extends StatelessWidget {
   const MyAppItemComic({

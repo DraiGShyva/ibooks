@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:myapp/components/my_app_text.dart';
-import 'package:myapp/utils/colors.dart';
+import 'package:ibooks/components/my_app_text.dart';
+import 'package:ibooks/utils/colors.dart';
 
 class MyAppNotification {
   MyAppNotification._();
